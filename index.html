@@ -321,6 +321,10 @@
         }
 
         /* ============ INTRO SCREEN ============ */
+        #introScreen {
+            background: url('menu_background_pokemons.png') center center / cover no-repeat;
+        }
+
         .intro-container {
             text-align: center;
             max-width: 600px;
@@ -2283,6 +2287,47 @@
     </div>
 
     <script>
+        // ============ iOS AUDIO UNLOCK ============
+        let iosAudioUnlocked = false;
+        
+        function unlockiOSAudio() {
+            if (iosAudioUnlocked) return Promise.resolve();
+            
+            return new Promise((resolve) => {
+                // Hämta alla audio-element
+                const allAudio = document.querySelectorAll('audio');
+                const unlockPromises = [];
+                
+                allAudio.forEach(audio => {
+                    // Sätt volym till 0 tillfälligt
+                    const originalVolume = audio.volume;
+                    audio.volume = 0;
+                    audio.muted = true;
+                    
+                    // Försök spela och pausa direkt
+                    const promise = audio.play().then(() => {
+                        audio.pause();
+                        audio.currentTime = 0;
+                        audio.volume = originalVolume;
+                        audio.muted = false;
+                    }).catch(() => {
+                        audio.volume = originalVolume;
+                        audio.muted = false;
+                    });
+                    
+                    unlockPromises.push(promise);
+                });
+                
+                Promise.all(unlockPromises).then(() => {
+                    iosAudioUnlocked = true;
+                    console.log('iOS Audio unlocked successfully');
+                    resolve();
+                }).catch(() => {
+                    resolve();
+                });
+            });
+        }
+
         // ============ POKEMON COLLECTION DATA ============
         const pokemonCollection = {
             pikachu: {
@@ -2851,10 +2896,21 @@
         let currentDialogIndex = 0;
 
         function showWelcome() {
-            currentDialogIndex = 0;
-            showScreen('welcomeScreen');
-            startMenuMusic();
-            showDialog();
+            // Lås upp iOS-ljud först (synkront i user gesture)
+            unlockiOSAudio().then(() => {
+                currentDialogIndex = 0;
+                showScreen('welcomeScreen');
+                
+                // Starta musik efter kort fördröjning
+                setTimeout(() => {
+                    startMenuMusic();
+                }, 100);
+                
+                // Fördröj första dialogen lite för att musiken ska hinna starta
+                setTimeout(() => {
+                    showDialog();
+                }, 600);
+            });
         }
 
         function showDialog() {
@@ -3727,30 +3783,6 @@
         // Initialisera samlarbok-räknaren vid start
         document.addEventListener('DOMContentLoaded', function() {
             updateCollectionCount();
-            
-            // iOS Audio Unlock - krävs för att ljud ska fungera på iPad/iPhone
-            let audioUnlocked = false;
-            const unlockAudio = function() {
-                if (audioUnlocked) return;
-                
-                // Skapa och spela ett tyst ljud för att "låsa upp" audio
-                const silentSound = new Audio();
-                silentSound.play().then(() => {
-                    audioUnlocked = true;
-                    console.log('Audio unlocked for iOS');
-                }).catch(() => {
-                    // Ignorera fel, försök igen vid nästa interaktion
-                });
-                
-                // Försök också aktivera alla audio-element
-                document.querySelectorAll('audio').forEach(audio => {
-                    audio.load();
-                });
-            };
-            
-            // Lyssna på första interaktionen
-            document.addEventListener('touchstart', unlockAudio, { once: true });
-            document.addEventListener('click', unlockAudio, { once: true });
             
             // Förhindra dubbel-tap zoom på iPad
             let lastTouchEnd = 0;
