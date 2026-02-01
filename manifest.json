@@ -1,0 +1,19 @@
+{
+  "name": "Lukas Pokémon Matteförskola",
+  "short_name": "Lukas Pokémon",
+  "description": "Ett roligt mattespel för barn med Pokémon!",
+  "start_url": "index.html",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#3D7DCA",
+  "theme_color": "#3D7DCA",
+  "icons": [
+    {
+      "src": "Pikachu.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "games", "kids"]
+}
