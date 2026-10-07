@@ -1918,68 +1918,22 @@
 <body>
 
     <!-- Audio Elements - Music -->
-    <audio id="menuMusic" loop>
+    <!-- Menymusiken behövs direkt; spelmusiken laddas först när den behövs -->
+    <audio id="menuMusic" loop preload="auto">
         <source src="Lukas_mattespel_main.mp3" type="audio/mpeg">
     </audio>
-    <audio id="introMusic" loop>
-        <source src="Lukas_mattespel_main.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="bgMusic1" loop>
+    <audio id="bgMusic1" loop preload="none">
         <source src="Liams_mattespel_Ingame_soft1.mp3" type="audio/mpeg">
     </audio>
-    <audio id="bgMusic2" loop>
+    <audio id="bgMusic2" loop preload="none">
         <source src="Liams_mattespel_ingame_soft2.mp3" type="audio/mpeg">
     </audio>
-    <audio id="catchSound">
+    <audio id="catchSound" preload="auto">
         <source src="Liams_mattespel_pokemon_catch.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Audio Elements - Professor Ek TTS -->
-    <audio id="prof_intro_counting" src="prof_intro_counting.mp3"></audio>
-    <audio id="prof_intro_colors" src="prof_intro_colors.mp3"></audio>
-    <audio id="prof_intro_matching" src="prof_intro_matching.mp3"></audio>
-    <audio id="prof_intro_sequence" src="prof_intro_sequence.mp3"></audio>
-    <audio id="prof_hur_manga" src="prof_hur_manga.mp3"></audio>
-    <audio id="prof_vilken_sida" src="prof_vilken_sida.mp3"></audio>
-    <audio id="prof_vad_kommer" src="prof_vad_kommer.mp3"></audio>
-    <audio id="prof_tryck_gul" src="prof_tryck_gul.mp3"></audio>
-    <audio id="prof_tryck_orange" src="prof_tryck_orange.mp3"></audio>
-    <audio id="prof_tryck_rod" src="prof_tryck_rod.mp3"></audio>
-    <audio id="prof_tryck_bla" src="prof_tryck_bla.mp3"></audio>
-    <audio id="prof_tryck_gron" src="prof_tryck_gron.mp3"></audio>
-    <audio id="prof_tryck_lila" src="prof_tryck_lila.mp3"></audio>
-    <audio id="prof_tryck_rosa" src="prof_tryck_rosa.mp3"></audio>
-    <audio id="prof_tryck_brun" src="prof_tryck_brun.mp3"></audio>
-    <audio id="prof_fel_rakna" src="prof_fel_rakna.mp3"></audio>
-    <audio id="prof_fel_1" src="prof_fel_1.mp3"></audio>
-    <audio id="prof_fel_2" src="prof_fel_2.mp3"></audio>
-    <audio id="prof_fel_3" src="prof_fel_3.mp3"></audio>
-    <audio id="prof_valkomst_1" src="prof_valkomst_1.mp3"></audio>
-    <audio id="prof_valkomst_2" src="prof_valkomst_2.mp3"></audio>
-    <audio id="prof_valkomst_3" src="prof_valkomst_3.mp3"></audio>
-
-    <!-- Audio Elements - Lukas TTS -->
-    <audio id="lukas_hej" src="lukas_hej.mp3"></audio>
-    <audio id="lukas_ja" src="lukas_ja.mp3"></audio>
-
-    <!-- Audio Elements - Pikachu TTS -->
-    <audio id="pika_ett" src="pika_ett.mp3"></audio>
-    <audio id="pika_tva" src="pika_tva.mp3"></audio>
-    <audio id="pika_tre" src="pika_tre.mp3"></audio>
-    <audio id="pika_fyra" src="pika_fyra.mp3"></audio>
-    <audio id="pika_fem" src="pika_fem.mp3"></audio>
-    <audio id="pika_sex" src="pika_sex.mp3"></audio>
-    <audio id="pika_sju" src="pika_sju.mp3"></audio>
-    <audio id="pika_atta" src="pika_atta.mp3"></audio>
-    <audio id="pika_nio" src="pika_nio.mp3"></audio>
-    <audio id="pika_tio" src="pika_tio.mp3"></audio>
-    <audio id="pika_ratt_1" src="pika_ratt_1.mp3"></audio>
-    <audio id="pika_ratt_2" src="pika_ratt_2.mp3"></audio>
-    <audio id="pika_ratt_3" src="pika_ratt_3.mp3"></audio>
-    <audio id="pika_ratt_4" src="pika_ratt_4.mp3"></audio>
-    <audio id="pika_ratt_5" src="pika_ratt_5.mp3"></audio>
-    <audio id="pika_grattis" src="pika_grattis.mp3"></audio>
-    <audio id="pika_toppen" src="pika_toppen_mp3.mp3"></audio>
+    <!-- En enda spelare för all röst (Professor Ek, Lukas, Pikachu). Klippen förladdas i bakgrunden, se TTS_FILES. -->
+    <audio id="ttsPlayer" preload="auto" src="prof_valkomst_1.mp3"></audio>
 
     <!-- Audio Toggle Button -->
     <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">🔊</button>
@@ -2288,43 +2242,22 @@
 
     <script>
         // ============ iOS AUDIO UNLOCK ============
+        // iOS kräver att varje ljudelement startas inom en användargest (tryck).
+        // play() måste anropas synkront i klick-hanteraren - vi väntar INTE på att
+        // filerna laddas, annars hänger startskärmen tills allt ljud är nedladdat.
         let iosAudioUnlocked = false;
-        
+
         function unlockiOSAudio() {
-            if (iosAudioUnlocked) return Promise.resolve();
-            
-            return new Promise((resolve) => {
-                // Hämta alla audio-element
-                const allAudio = document.querySelectorAll('audio');
-                const unlockPromises = [];
-                
-                allAudio.forEach(audio => {
-                    // Sätt volym till 0 tillfälligt
-                    const originalVolume = audio.volume;
-                    audio.volume = 0;
-                    audio.muted = true;
-                    
-                    // Försök spela och pausa direkt
-                    const promise = audio.play().then(() => {
-                        audio.pause();
-                        audio.currentTime = 0;
-                        audio.volume = originalVolume;
-                        audio.muted = false;
-                    }).catch(() => {
-                        audio.volume = originalVolume;
-                        audio.muted = false;
-                    });
-                    
-                    unlockPromises.push(promise);
-                });
-                
-                Promise.all(unlockPromises).then(() => {
-                    iosAudioUnlocked = true;
-                    console.log('iOS Audio unlocked successfully');
-                    resolve();
-                }).catch(() => {
-                    resolve();
-                });
+            if (iosAudioUnlocked) return;
+            iosAudioUnlocked = true;
+
+            document.querySelectorAll('audio').forEach(audio => {
+                if (!audio.paused) return;
+                audio.muted = true;
+                const promise = audio.play();
+                audio.pause();
+                audio.muted = false;
+                if (promise) promise.catch(() => {});
             });
         }
 
@@ -2585,14 +2518,13 @@
         let isMuted = false;
         let currentBgMusic = null;
         const menuMusic = document.getElementById('menuMusic');
-        const introMusic = document.getElementById('introMusic');
+        const introMusic = menuMusic; // Samma låt - ett element räcker
         const bgMusic1 = document.getElementById('bgMusic1');
         const bgMusic2 = document.getElementById('bgMusic2');
         const catchSound = document.getElementById('catchSound');
 
         // Set initial volumes
         menuMusic.volume = 0.3;
-        introMusic.volume = 0.3;
         bgMusic1.volume = 0.3;
         bgMusic2.volume = 0.3;
         catchSound.volume = 0.5;
@@ -2622,11 +2554,9 @@
 
         function stopAllAudio() {
             menuMusic.pause();
-            introMusic.pause();
             bgMusic1.pause();
             bgMusic2.pause();
             menuMusic.currentTime = 0;
-            introMusic.currentTime = 0;
             bgMusic1.currentTime = 0;
             bgMusic2.currentTime = 0;
             currentBgMusic = null;
@@ -2697,34 +2627,102 @@
         }
 
         // ============ TTS FUNCTIONS ============
-        let currentTTS = null;
+        const ttsPlayer = document.getElementById('ttsPlayer');
+
+        // Välkomstdialogen först så den är redo när man trycker på STARTA
+        const TTS_FILES = {
+            prof_valkomst_1: 'prof_valkomst_1.mp3',
+            lukas_hej: 'lukas_hej.mp3',
+            prof_valkomst_2: 'prof_valkomst_2.mp3',
+            lukas_ja: 'lukas_ja.mp3',
+            prof_valkomst_3: 'prof_valkomst_3.mp3',
+            prof_intro_counting: 'prof_intro_counting.mp3',
+            prof_intro_colors: 'prof_intro_colors.mp3',
+            prof_intro_matching: 'prof_intro_matching.mp3',
+            prof_intro_sequence: 'prof_intro_sequence.mp3',
+            prof_hur_manga: 'prof_hur_manga.mp3',
+            prof_vilken_sida: 'prof_vilken_sida.mp3',
+            prof_vad_kommer: 'prof_vad_kommer.mp3',
+            prof_tryck_gul: 'prof_tryck_gul.mp3',
+            prof_tryck_orange: 'prof_tryck_orange.mp3',
+            prof_tryck_rod: 'prof_tryck_rod.mp3',
+            prof_tryck_bla: 'prof_tryck_bla.mp3',
+            prof_tryck_gron: 'prof_tryck_gron.mp3',
+            prof_tryck_lila: 'prof_tryck_lila.mp3',
+            prof_tryck_rosa: 'prof_tryck_rosa.mp3',
+            prof_tryck_brun: 'prof_tryck_brun.mp3',
+            prof_fel_rakna: 'prof_fel_rakna.mp3',
+            prof_fel_1: 'prof_fel_1.mp3',
+            prof_fel_2: 'prof_fel_2.mp3',
+            prof_fel_3: 'prof_fel_3.mp3',
+            pika_ett: 'pika_ett.mp3',
+            pika_tva: 'pika_tva.mp3',
+            pika_tre: 'pika_tre.mp3',
+            pika_fyra: 'pika_fyra.mp3',
+            pika_fem: 'pika_fem.mp3',
+            pika_sex: 'pika_sex.mp3',
+            pika_sju: 'pika_sju.mp3',
+            pika_atta: 'pika_atta.mp3',
+            pika_nio: 'pika_nio.mp3',
+            pika_tio: 'pika_tio.mp3',
+            pika_ratt_1: 'pika_ratt_1.mp3',
+            pika_ratt_2: 'pika_ratt_2.mp3',
+            pika_ratt_3: 'pika_ratt_3.mp3',
+            pika_ratt_4: 'pika_ratt_4.mp3',
+            pika_ratt_5: 'pika_ratt_5.mp3',
+            pika_grattis: 'pika_grattis.mp3',
+            pika_toppen: 'pika_toppen_mp3.mp3'
+        };
+
+        // Förladdade klipp (blob-URL:er) så att rösten startar direkt
+        const ttsCache = {};
+
+        function preloadTTS() {
+            const ids = Object.keys(TTS_FILES);
+            let next = 0;
+
+            function loadNext() {
+                if (next >= ids.length) return Promise.resolve();
+                const id = ids[next++];
+                return fetch(TTS_FILES[id])
+                    .then(r => r.ok ? r.blob() : null)
+                    .then(blob => { if (blob) ttsCache[id] = URL.createObjectURL(blob); })
+                    .catch(() => {}) // t.ex. file:// - då spelas filen direkt istället
+                    .then(loadNext);
+            }
+
+            // Några åt gången så att bilderna inte svälts ut
+            for (let i = 0; i < 3; i++) loadNext();
+        }
+
+        window.addEventListener('load', preloadTTS);
 
         function playTTS(audioId, callback) {
             if (isMuted) {
                 if (callback) callback();
                 return;
             }
-            
-            // Stop any currently playing TTS
-            if (currentTTS) {
-                currentTTS.pause();
-                currentTTS.currentTime = 0;
+
+            const src = ttsCache[audioId] || TTS_FILES[audioId];
+            if (!src) {
+                if (callback) callback();
+                return;
             }
-            
-            const audio = document.getElementById(audioId);
-            if (audio) {
-                audio.volume = 0.8;
-                audio.currentTime = 0;
-                currentTTS = audio;
-                
-                if (callback) {
-                    audio.onended = callback;
+
+            // Avbryt pågående replik och ersätt dess callback
+            ttsPlayer.pause();
+            ttsPlayer.onended = callback || null;
+            ttsPlayer.src = src;
+            ttsPlayer.volume = 0.8;
+
+            ttsPlayer.play().catch(e => {
+                console.log('TTS play failed:', e);
+                // Låt inte t.ex. räkneanimationen fastna om ljudet inte kan spelas
+                if (e.name !== 'AbortError' && callback && ttsPlayer.onended === callback) {
+                    ttsPlayer.onended = null;
+                    callback();
                 }
-                
-                audio.play().catch(e => console.log('TTS play failed:', e));
-            } else if (callback) {
-                callback();
-            }
+            });
         }
 
         function playRandomPikaRatt() {
@@ -2896,21 +2894,17 @@
         let currentDialogIndex = 0;
 
         function showWelcome() {
-            // Lås upp iOS-ljud först (synkront i user gesture)
-            unlockiOSAudio().then(() => {
-                currentDialogIndex = 0;
-                showScreen('welcomeScreen');
-                
-                // Starta musik efter kort fördröjning
-                setTimeout(() => {
-                    startMenuMusic();
-                }, 100);
-                
-                // Fördröj första dialogen lite för att musiken ska hinna starta
-                setTimeout(() => {
-                    showDialog();
-                }, 600);
-            });
+            // Lås upp iOS-ljud synkront i användargesten - utan att vänta på nedladdning
+            unlockiOSAudio();
+
+            currentDialogIndex = 0;
+            showScreen('welcomeScreen');
+            startMenuMusic();
+
+            // Fördröj första dialogen lite så att musiken hinner starta
+            setTimeout(() => {
+                showDialog();
+            }, 600);
         }
 
         function showDialog() {
