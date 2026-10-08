@@ -47,7 +47,6 @@
             --safe-bottom: env(safe-area-inset-bottom);
             --safe-left: env(safe-area-inset-left);
             --safe-right: env(safe-area-inset-right);
-        }
             --shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
             --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.25);
         }
@@ -508,6 +507,10 @@
             color: #333;
             margin-bottom: 25px;
             padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             background: var(--card-bg);
             border-radius: 20px;
             box-shadow: var(--shadow);
@@ -586,6 +589,8 @@
         .number-btn:nth-child(3) { background: linear-gradient(180deg, #FFE66D, #FFC107); color: #333; }
         .number-btn:nth-child(4) { background: linear-gradient(180deg, #A78BFA, #7C3AED); }
         .number-btn:nth-child(5) { background: linear-gradient(180deg, #60A5FA, #3B82F6); }
+        .number-btn:nth-child(6) { background: linear-gradient(180deg, #F472B6, #DB2777); }
+        .number-btn:nth-child(7) { background: linear-gradient(180deg, #34D399, #059669); }
 
         .number-btn:active {
             transform: translateY(3px);
@@ -955,7 +960,7 @@
             height: 15px;
             top: -20px;
             animation: confettiFall linear forwards;
-            z-index: 999;
+            z-index: 1002;
         }
 
         @keyframes confettiFall {
@@ -1913,73 +1918,347 @@
                 padding-bottom: env(safe-area-inset-bottom);
             }
         }
+
+        /* ============ FÖR DEN SOM INTE LÄSER ÄN ============ */
+        .big-next-btn {
+            width: 96px;
+            height: 96px;
+            padding: 0;
+            border-radius: 50%;
+            border: none;
+            font-size: 3rem;
+            line-height: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #4ADE80, #22C55E);
+            color: white;
+            box-shadow: 0 6px 0 #15803D, var(--shadow);
+            cursor: pointer;
+            animation: nudge 1.6s ease-in-out infinite;
+        }
+
+        .big-next-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #15803D;
+        }
+
+        @keyframes nudge {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(6px); }
+        }
+
+        .repeat-btn {
+            width: 56px;
+            height: 56px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            border: none;
+            background: var(--pokemon-yellow);
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #B45309;
+        }
+
+        .repeat-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #B45309;
+        }
+
+        .menu-card:active {
+            transform: scale(0.95);
+        }
+
+        /* ============ TRYCK OCH RÄKNA ============ */
+        .countable {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .countable.hop {
+            animation: hop 0.4s ease;
+        }
+
+        @keyframes hop {
+            0%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-18px) scale(1.1); }
+        }
+
+        .countable.counted .pokemon-to-count {
+            filter: drop-shadow(0 0 8px gold);
+        }
+
+        .count-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            min-width: 32px;
+            height: 32px;
+            border-radius: 16px;
+            background: var(--pokemon-blue);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 0 #1E40AF;
+        }
+
+        .countable.counted .count-badge {
+            display: flex;
+        }
+
+        .matching-side .count-badge {
+            min-width: 24px;
+            height: 24px;
+            font-size: 0.9rem;
+            top: -6px;
+            right: -6px;
+        }
+
+        .number-btn.invite {
+            animation: pulse 0.8s ease-in-out 2;
+        }
+
+        .number-btn.wrong:disabled,
+        .battle-answer-btn.wrong:disabled {
+            opacity: 0.4;
+        }
+
+        /* ============ VAD KOMMER SEN: Pokébollar under talen ============ */
+        .sequence-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sequence-balls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3px;
+            width: 80px;
+            min-height: 24px;
+        }
+
+        .sequence-balls img {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+        }
+
+        .sequence-balls img.hint {
+            opacity: 0.35;
+        }
+
+        .sequence-balls img.hint-new {
+            animation: pulse 0.8s ease-in-out infinite;
+        }
+
+        .sequence-number, .sequence-mystery {
+            transition: transform 0.2s ease;
+        }
+
+        .sequence-number.speaking, .sequence-mystery.speaking {
+            transform: scale(1.25);
+        }
+
+        /* ============ MATCHEN: räkna på fingrarna ============ */
+        .hands-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .hand-svg {
+            width: 175px;
+            height: 170px;
+            cursor: pointer;
+        }
+
+        .hand-op {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--pokemon-blue);
+        }
+
+        .hand-svg .palm,
+        .hand-svg .finger rect,
+        .hand-svg .finger-folded rect {
+            fill: #FFD9B3;
+            stroke: #C98B5A;
+            stroke-width: 3;
+            transition: fill 0.2s ease;
+        }
+
+        .hand-svg .finger.counted rect {
+            fill: var(--pokemon-yellow);
+        }
+
+        .hand-svg .finger.hop {
+            animation: fingerHop 0.4s ease;
+            transform-box: fill-box;
+            transform-origin: center bottom;
+        }
+
+        @keyframes fingerHop {
+            0%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-8px); }
+        }
+
+        .count-badge-svg {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            fill: var(--pokemon-blue);
+            display: none;
+        }
+
+        .finger.counted .count-badge-svg {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .hand-svg {
+                width: 130px;
+                height: 130px;
+            }
+        }
+
+        .battle-math-small {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1rem;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .battle-message-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .battle-message-row .battle-message {
+            margin-bottom: 0;
+        }
+
+        .battle-result-img.resting {
+            animation: none;
+            transform: rotate(-12deg);
+            opacity: 0.85;
+        }
+
+        /* ============ FÅNGA POKÉMON ============ */
+        .catch-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.75);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .catch-overlay.active {
+            display: flex;
+        }
+
+        .catch-card {
+            background: white;
+            border-radius: 30px;
+            padding: 30px;
+            width: 90%;
+            max-width: 420px;
+            text-align: center;
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            animation: popIn 0.4s ease;
+        }
+
+        .catch-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--pokemon-blue);
+        }
+
+        .catch-ball {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .catch-ball img {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+        }
+
+        .catch-ball.shaking {
+            animation: ballShake 0.6s ease-in-out 3;
+        }
+
+        @keyframes ballShake {
+            0%, 100% { transform: rotate(0); }
+            25% { transform: rotate(-20deg); }
+            75% { transform: rotate(20deg); }
+        }
+
+        .catch-pokemon {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            display: none;
+            animation: popIn 0.5s ease;
+        }
+
+        .catch-name {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .modal-pokemon-type.dragon { background: #6366F1; }
+        .modal-pokemon-type.rock { background: #A16207; }
     </style>
 </head>
 <body>
 
     <!-- Audio Elements - Music -->
-    <audio id="menuMusic" loop>
+    <!-- Menymusiken behövs direkt; spelmusiken laddas först när den behövs -->
+    <audio id="menuMusic" loop preload="auto">
         <source src="Lukas_mattespel_main.mp3" type="audio/mpeg">
     </audio>
-    <audio id="introMusic" loop>
-        <source src="Lukas_mattespel_main.mp3" type="audio/mpeg">
-    </audio>
-    <audio id="bgMusic1" loop>
+    <audio id="bgMusic1" loop preload="none">
         <source src="Liams_mattespel_Ingame_soft1.mp3" type="audio/mpeg">
     </audio>
-    <audio id="bgMusic2" loop>
+    <audio id="bgMusic2" loop preload="none">
         <source src="Liams_mattespel_ingame_soft2.mp3" type="audio/mpeg">
     </audio>
-    <audio id="catchSound">
+    <audio id="catchSound" preload="auto">
         <source src="Liams_mattespel_pokemon_catch.mp3" type="audio/mpeg">
     </audio>
 
-    <!-- Audio Elements - Professor Ek TTS -->
-    <audio id="prof_intro_counting" src="prof_intro_counting.mp3"></audio>
-    <audio id="prof_intro_colors" src="prof_intro_colors.mp3"></audio>
-    <audio id="prof_intro_matching" src="prof_intro_matching.mp3"></audio>
-    <audio id="prof_intro_sequence" src="prof_intro_sequence.mp3"></audio>
-    <audio id="prof_hur_manga" src="prof_hur_manga.mp3"></audio>
-    <audio id="prof_vilken_sida" src="prof_vilken_sida.mp3"></audio>
-    <audio id="prof_vad_kommer" src="prof_vad_kommer.mp3"></audio>
-    <audio id="prof_tryck_gul" src="prof_tryck_gul.mp3"></audio>
-    <audio id="prof_tryck_orange" src="prof_tryck_orange.mp3"></audio>
-    <audio id="prof_tryck_rod" src="prof_tryck_rod.mp3"></audio>
-    <audio id="prof_tryck_bla" src="prof_tryck_bla.mp3"></audio>
-    <audio id="prof_tryck_gron" src="prof_tryck_gron.mp3"></audio>
-    <audio id="prof_tryck_lila" src="prof_tryck_lila.mp3"></audio>
-    <audio id="prof_tryck_rosa" src="prof_tryck_rosa.mp3"></audio>
-    <audio id="prof_tryck_brun" src="prof_tryck_brun.mp3"></audio>
-    <audio id="prof_fel_rakna" src="prof_fel_rakna.mp3"></audio>
-    <audio id="prof_fel_1" src="prof_fel_1.mp3"></audio>
-    <audio id="prof_fel_2" src="prof_fel_2.mp3"></audio>
-    <audio id="prof_fel_3" src="prof_fel_3.mp3"></audio>
-    <audio id="prof_valkomst_1" src="prof_valkomst_1.mp3"></audio>
-    <audio id="prof_valkomst_2" src="prof_valkomst_2.mp3"></audio>
-    <audio id="prof_valkomst_3" src="prof_valkomst_3.mp3"></audio>
-
-    <!-- Audio Elements - Lukas TTS -->
-    <audio id="lukas_hej" src="lukas_hej.mp3"></audio>
-    <audio id="lukas_ja" src="lukas_ja.mp3"></audio>
-
-    <!-- Audio Elements - Pikachu TTS -->
-    <audio id="pika_ett" src="pika_ett.mp3"></audio>
-    <audio id="pika_tva" src="pika_tva.mp3"></audio>
-    <audio id="pika_tre" src="pika_tre.mp3"></audio>
-    <audio id="pika_fyra" src="pika_fyra.mp3"></audio>
-    <audio id="pika_fem" src="pika_fem.mp3"></audio>
-    <audio id="pika_sex" src="pika_sex.mp3"></audio>
-    <audio id="pika_sju" src="pika_sju.mp3"></audio>
-    <audio id="pika_atta" src="pika_atta.mp3"></audio>
-    <audio id="pika_nio" src="pika_nio.mp3"></audio>
-    <audio id="pika_tio" src="pika_tio.mp3"></audio>
-    <audio id="pika_ratt_1" src="pika_ratt_1.mp3"></audio>
-    <audio id="pika_ratt_2" src="pika_ratt_2.mp3"></audio>
-    <audio id="pika_ratt_3" src="pika_ratt_3.mp3"></audio>
-    <audio id="pika_ratt_4" src="pika_ratt_4.mp3"></audio>
-    <audio id="pika_ratt_5" src="pika_ratt_5.mp3"></audio>
-    <audio id="pika_grattis" src="pika_grattis.mp3"></audio>
-    <audio id="pika_toppen" src="pika_toppen_mp3.mp3"></audio>
+    <!-- En enda spelare för all röst (Professor Ek, Lukas, Pikachu). Klippen förladdas i bakgrunden, se TTS_FILES. -->
+    <audio id="ttsPlayer" preload="auto" src="prof_valkomst_1.mp3"></audio>
 
     <!-- Audio Toggle Button -->
     <button class="audio-btn" id="audioBtn" onclick="toggleAudio()">🔊</button>
@@ -2008,7 +2287,7 @@
                     <p class="dialog-text" id="dialogText"></p>
                 </div>
             </div>
-            <button class="welcome-next-btn" id="welcomeNextBtn" onclick="nextDialog()">Nästa →</button>
+            <button class="big-next-btn" id="welcomeNextBtn" onclick="nextDialog()" aria-label="Nästa">➜</button>
         </div>
     </div>
 
@@ -2022,25 +2301,25 @@
             </div>
             
             <div class="menu-grid">
-                <div class="menu-card counting" onclick="startGame('counting')">
+                <div class="menu-card counting" onclick="startGame('counting', true)">
                     <div class="menu-card-icon">🔢</div>
                     <div class="menu-card-title">Räkna Pokémon</div>
                     <div class="menu-card-desc">Hur många ser du?</div>
                 </div>
                 
-                <div class="menu-card colors" onclick="startGame('colors')">
+                <div class="menu-card colors" onclick="startGame('colors', true)">
                     <div class="menu-card-icon">🎨</div>
                     <div class="menu-card-title">Färgjakten</div>
                     <div class="menu-card-desc">Hitta rätt färg!</div>
                 </div>
                 
-                <div class="menu-card matching" onclick="startGame('matching')">
+                <div class="menu-card matching" onclick="startGame('matching', true)">
                     <div class="menu-card-icon">⚖️</div>
                     <div class="menu-card-title">Para Ihop</div>
                     <div class="menu-card-desc">Vilken sida är rätt?</div>
                 </div>
                 
-                <div class="menu-card sequence" onclick="startGame('sequence')">
+                <div class="menu-card sequence" onclick="startGame('sequence', true)">
                     <div class="menu-card-icon">📈</div>
                     <div class="menu-card-title">Vad Kommer Sen?</div>
                     <div class="menu-card-desc">Räkna vidare!</div>
@@ -2201,7 +2480,10 @@
             </div>
             
             <div class="battle-question-area">
-                <p class="battle-message" id="battleMessage">Din tur att attackera!</p>
+                <div class="battle-message-row">
+                    <p class="battle-message" id="battleMessage">Din tur att attackera!</p>
+                    <button class="repeat-btn" onclick="repeatCurrentQuestion()" aria-label="Hör frågan igen">🔊</button>
+                </div>
                 <div class="battle-math" id="battleMath"></div>
                 <div class="battle-answers" id="battleAnswers"></div>
             </div>
@@ -2244,16 +2526,13 @@
             <div class="game-header">
                 <button class="home-btn" onclick="showMenu()">🏠</button>
                 <div class="game-progress" id="gameProgress">1 / 5</div>
-                <div class="game-stars" id="gameStars">
-                    <span class="star">⭐</span>
-                    <span class="star">⭐</span>
-                    <span class="star">⭐</span>
-                    <span class="star">⭐</span>
-                    <span class="star">⭐</span>
-                </div>
+                <div class="game-stars" id="gameStars"></div>
             </div>
             
-            <div class="game-question" id="gameQuestion"></div>
+            <div class="game-question" id="gameQuestion">
+                <span id="gameQuestionText"></span>
+                <button class="repeat-btn" onclick="repeatCurrentQuestion()" aria-label="Hör frågan igen">🔊</button>
+            </div>
             
             <div id="gameArea"></div>
         </div>
@@ -2282,49 +2561,41 @@
             <img src="Pikachu_happy.png" alt="Feedback" class="feedback-pokemon" id="feedbackPokemon">
             <div class="feedback-text" id="feedbackText">RÄTT!</div>
             <div class="feedback-subtext" id="feedbackSubtext">Bra jobbat!</div>
-            <button class="feedback-btn" id="feedbackBtn" onclick="nextQuestion()">NÄSTA →</button>
+            <button class="big-next-btn" id="feedbackBtn" onclick="nextQuestion()" aria-label="Nästa">➜</button>
+        </div>
+    </div>
+
+    <!-- ============ FÅNGA POKÉMON ============ -->
+    <div class="catch-overlay" id="catchOverlay">
+        <div class="catch-card">
+            <div class="catch-title" id="catchTitle">Fånga en Pokémon!</div>
+            <button class="catch-ball" id="catchBall" onclick="throwBall()" aria-label="Kasta Pokébollen">
+                <img src="Pokeball.png" alt="Pokéboll">
+            </button>
+            <img src="" alt="" class="catch-pokemon" id="catchPokemon">
+            <div class="catch-name" id="catchName"></div>
+            <button class="big-next-btn" id="catchDoneBtn" onclick="closeCatch()" aria-label="Klar">➜</button>
         </div>
     </div>
 
     <script>
         // ============ iOS AUDIO UNLOCK ============
+        // iOS kräver att varje ljudelement startas inom en användargest (tryck).
+        // play() måste anropas synkront i klick-hanteraren - vi väntar INTE på att
+        // filerna laddas, annars hänger startskärmen tills allt ljud är nedladdat.
         let iosAudioUnlocked = false;
-        
+
         function unlockiOSAudio() {
-            if (iosAudioUnlocked) return Promise.resolve();
-            
-            return new Promise((resolve) => {
-                // Hämta alla audio-element
-                const allAudio = document.querySelectorAll('audio');
-                const unlockPromises = [];
-                
-                allAudio.forEach(audio => {
-                    // Sätt volym till 0 tillfälligt
-                    const originalVolume = audio.volume;
-                    audio.volume = 0;
-                    audio.muted = true;
-                    
-                    // Försök spela och pausa direkt
-                    const promise = audio.play().then(() => {
-                        audio.pause();
-                        audio.currentTime = 0;
-                        audio.volume = originalVolume;
-                        audio.muted = false;
-                    }).catch(() => {
-                        audio.volume = originalVolume;
-                        audio.muted = false;
-                    });
-                    
-                    unlockPromises.push(promise);
-                });
-                
-                Promise.all(unlockPromises).then(() => {
-                    iosAudioUnlocked = true;
-                    console.log('iOS Audio unlocked successfully');
-                    resolve();
-                }).catch(() => {
-                    resolve();
-                });
+            if (iosAudioUnlocked) return;
+            iosAudioUnlocked = true;
+
+            document.querySelectorAll('audio').forEach(audio => {
+                if (!audio.paused) return;
+                audio.muted = true;
+                const promise = audio.play();
+                audio.pause();
+                audio.muted = false;
+                if (promise) promise.catch(() => {});
             });
         }
 
@@ -2489,6 +2760,86 @@
                 typeName: '🔥 Eld',
                 fact: 'Scorbunny är en vit kanin som springer supernabbt! Fötterna blir heta när den springer! 🐰',
                 sound: 'Scor!'
+            },
+            hawlucha: {
+                name: 'Hawlucha',
+                img: 'Hawlucha.png',
+                type: 'fighting',
+                typeName: '👊 Kämpe & Flygande',
+                fact: 'Hawlucha är en brottare som kan flyga! Den älskar att göra coola hopp. 🦅',
+                sound: 'Hawlucha!'
+            },
+            noctowl: {
+                name: 'Noctowl',
+                img: 'Noctowl.png',
+                type: 'flying',
+                typeName: '🕊️ Normal & Flygande',
+                fact: 'Noctowl är en uggla som ser jättebra i mörkret! 🦉',
+                sound: 'Hoo hoo!'
+            },
+            wartortle: {
+                name: 'Wartortle',
+                img: 'Wartortle.png',
+                type: 'water',
+                typeName: '💧 Vatten',
+                fact: 'Wartortle är Squirtles storebror! Den har en fluffig svans och fluffiga öron. 🐢',
+                sound: 'Wartortle!'
+            },
+            blastoise: {
+                name: 'Blastoise',
+                img: 'Blastoise.png',
+                type: 'water',
+                typeName: '💧 Vatten',
+                fact: 'Blastoise har två vattenkanoner på ryggen som sprutar jättemycket vatten! 💦',
+                sound: 'Blastoise!'
+            },
+            staryu: {
+                name: 'Staryu',
+                img: 'Staryu.png',
+                type: 'water',
+                typeName: '💧 Vatten',
+                fact: 'Staryu ser ut som en stjärna. Om den tappar en arm så växer den ut igen! ⭐',
+                sound: 'Hyah!'
+            },
+            braixen: {
+                name: 'Braixen',
+                img: 'Braixen.png',
+                type: 'fire',
+                typeName: '🔥 Eld',
+                fact: 'Braixen har en pinne i svansen. När den drar ut pinnen börjar den brinna! 🔥',
+                sound: 'Braixen!'
+            },
+            volcanion: {
+                name: 'Volcanion',
+                img: 'Volcanion.png',
+                type: 'fire',
+                typeName: '🔥 Eld & 💧 Vatten',
+                fact: 'Volcanion är både eld och vatten! Den kan spruta het ånga. 💨',
+                sound: 'Volcanion!'
+            },
+            butterfree: {
+                name: 'Butterfree',
+                img: 'Butterfree.png',
+                type: 'bug',
+                typeName: '🐛 Insekt & Flygande',
+                fact: 'Butterfree är en fjäril. Först var den en liten Caterpie! 🦋',
+                sound: 'Free free!'
+            },
+            dragonair: {
+                name: 'Dragonair',
+                img: 'Dragonair.png',
+                type: 'dragon',
+                typeName: '🐉 Drake',
+                fact: 'Dragonair är en vacker drake som sägs kunna ändra vädret! 🌈',
+                sound: 'Dragonair!'
+            },
+            onix: {
+                name: 'Onix',
+                img: 'Onix.png',
+                type: 'rock',
+                typeName: '🪨 Sten',
+                fact: 'Onix är en jättelång orm av sten som gräver tunnlar under marken! ⛰️',
+                sound: 'Onix!'
             }
         };
 
@@ -2507,13 +2858,17 @@
             }
         }
 
+        function countCollected() {
+            return collectedPokemon.filter(key => pokemonCollection[key]).length;
+        }
+
         function updateCollectionCount() {
             const countEl = document.getElementById('collectionCount');
             const collectedEl = document.getElementById('collectedCount');
             const totalEl = document.getElementById('totalCount');
             
             const total = Object.keys(pokemonCollection).length;
-            const collected = collectedPokemon.length;
+            const collected = countCollected();
             
             if (countEl) countEl.textContent = collected;
             if (collectedEl) collectedEl.textContent = collected;
@@ -2521,6 +2876,7 @@
         }
 
         function showCollection() {
+            playTTS('meny_samlarbok');
             showScreen('collectionScreen');
             renderCollection();
         }
@@ -2585,14 +2941,13 @@
         let isMuted = false;
         let currentBgMusic = null;
         const menuMusic = document.getElementById('menuMusic');
-        const introMusic = document.getElementById('introMusic');
+        const introMusic = menuMusic; // Samma låt - ett element räcker
         const bgMusic1 = document.getElementById('bgMusic1');
         const bgMusic2 = document.getElementById('bgMusic2');
         const catchSound = document.getElementById('catchSound');
 
         // Set initial volumes
         menuMusic.volume = 0.3;
-        introMusic.volume = 0.3;
         bgMusic1.volume = 0.3;
         bgMusic2.volume = 0.3;
         catchSound.volume = 0.5;
@@ -2622,11 +2977,9 @@
 
         function stopAllAudio() {
             menuMusic.pause();
-            introMusic.pause();
             bgMusic1.pause();
             bgMusic2.pause();
             menuMusic.currentTime = 0;
-            introMusic.currentTime = 0;
             bgMusic1.currentTime = 0;
             bgMusic2.currentTime = 0;
             currentBgMusic = null;
@@ -2697,34 +3050,161 @@
         }
 
         // ============ TTS FUNCTIONS ============
-        let currentTTS = null;
+        const ttsPlayer = document.getElementById('ttsPlayer');
+
+        // Välkomstdialogen först så den är redo när man trycker på STARTA
+        const TTS_FILES = {
+            prof_valkomst_1: 'prof_valkomst_1.mp3',
+            lukas_hej: 'lukas_hej.mp3',
+            prof_valkomst_2: 'prof_valkomst_2.mp3',
+            lukas_ja: 'lukas_ja.mp3',
+            prof_valkomst_3: 'prof_valkomst_3.mp3',
+            prof_intro_counting: 'prof_intro_counting.mp3',
+            prof_intro_colors: 'prof_intro_colors.mp3',
+            prof_intro_matching: 'prof_intro_matching.mp3',
+            prof_intro_sequence: 'prof_intro_sequence.mp3',
+            prof_hur_manga: 'prof_hur_manga.mp3',
+            prof_vilken_sida: 'prof_vilken_sida.mp3',
+            prof_vad_kommer: 'prof_vad_kommer.mp3',
+            prof_tryck_gul: 'prof_tryck_gul.mp3',
+            prof_tryck_orange: 'prof_tryck_orange.mp3',
+            prof_tryck_rod: 'prof_tryck_rod.mp3',
+            prof_tryck_bla: 'prof_tryck_bla.mp3',
+            prof_tryck_gron: 'prof_tryck_gron.mp3',
+            prof_tryck_lila: 'prof_tryck_lila.mp3',
+            prof_tryck_rosa: 'prof_tryck_rosa.mp3',
+            prof_tryck_brun: 'prof_tryck_brun.mp3',
+            prof_fel_rakna: 'prof_fel_rakna.mp3',
+            prof_fel_1: 'prof_fel_1.mp3',
+            prof_fel_2: 'prof_fel_2.mp3',
+            prof_fel_3: 'prof_fel_3.mp3',
+            pika_ett: 'pika_ett.mp3',
+            pika_tva: 'pika_tva.mp3',
+            pika_tre: 'pika_tre.mp3',
+            pika_fyra: 'pika_fyra.mp3',
+            pika_fem: 'pika_fem.mp3',
+            pika_sex: 'pika_sex.mp3',
+            pika_sju: 'pika_sju.mp3',
+            pika_atta: 'pika_atta.mp3',
+            pika_nio: 'pika_nio.mp3',
+            pika_tio: 'pika_tio.mp3',
+            pika_ratt_1: 'pika_ratt_1.mp3',
+            pika_ratt_2: 'pika_ratt_2.mp3',
+            pika_ratt_3: 'pika_ratt_3.mp3',
+            pika_ratt_4: 'pika_ratt_4.mp3',
+            pika_ratt_5: 'pika_ratt_5.mp3',
+            pika_grattis: 'pika_grattis.mp3',
+            pika_toppen: 'pika_toppen_mp3.mp3',
+
+            // Nya repliker. Saknas filen hoppas repliken bara över.
+            meny_rakna: 'meny_rakna.mp3',
+            meny_farg: 'meny_farg.mp3',
+            meny_para: 'meny_para.mp3',
+            meny_sen: 'meny_sen.mp3',
+            meny_match: 'meny_match.mp3',
+            meny_samlarbok: 'meny_samlarbok.mp3',
+            prof_tryck_rakna: 'prof_tryck_rakna.mp3',
+            prof_hur_manga_tillsammans: 'prof_hur_manga_tillsammans.mp3',
+            prof_forsok_igen: 'prof_forsok_igen.mp3',
+            prof_andra_sidan: 'prof_andra_sidan.mp3',
+            prof_vi_raknar: 'prof_vi_raknar.mp3',
+            prof_kasta_boll: 'prof_kasta_boll.mp3',
+            prof_fangade: 'prof_fangade.mp3',
+            prof_din_tur: 'prof_din_tur.mp3',
+            prof_forsvara: 'prof_forsvara.mp3',
+            prof_tillsammans: 'prof_tillsammans.mp3',
+            pika_traff: 'pika_traff.mp3',
+            prof_vann_match: 'prof_vann_match.mp3',
+            prof_vila: 'prof_vila.mp3'
+        };
+
+        // Förladdade klipp (blob-URL:er) så att rösten startar direkt
+        const ttsCache = {};
+        // Klipp som inte finns på servern (ännu inte inspelade)
+        const ttsMissing = new Set();
+
+        function preloadTTS() {
+            const ids = Object.keys(TTS_FILES);
+            let next = 0;
+
+            function loadNext() {
+                if (next >= ids.length) return Promise.resolve();
+                const id = ids[next++];
+                return fetch(TTS_FILES[id])
+                    .then(r => {
+                        if (r.status === 404) ttsMissing.add(id);
+                        return r.ok ? r.blob() : null;
+                    })
+                    .then(blob => { if (blob) ttsCache[id] = URL.createObjectURL(blob); })
+                    .catch(() => {}) // t.ex. file:// - då spelas filen direkt istället
+                    .then(loadNext);
+            }
+
+            // Några åt gången så att bilderna inte svälts ut
+            for (let i = 0; i < 3; i++) loadNext();
+        }
+
+        window.addEventListener('load', preloadTTS);
+
+        // Ökas när all röst ska tystas, så att pågående kedjor slutar
+        let ttsToken = 0;
+
+        function hasTTS(audioId) {
+            return !!TTS_FILES[audioId] && !ttsMissing.has(audioId);
+        }
+
+        function stopTTS() {
+            ttsToken++;
+            ttsPlayer.onended = null;
+            ttsPlayer.pause();
+        }
+
+        // Spela flera klipp efter varandra. Ett objekt { id, onStart } kör onStart när klippet börjar.
+        function playTTSChain(items, done) {
+            const token = ttsToken;
+            let i = 0;
+
+            function next() {
+                if (token !== ttsToken) return;
+                if (i >= items.length) {
+                    if (done) done();
+                    return;
+                }
+                const item = items[i++];
+                if (!item) return next();
+                if (typeof item === 'object' && item.onStart) item.onStart();
+                playTTS(typeof item === 'string' ? item : item.id, () => setTimeout(next, 150));
+            }
+
+            next();
+        }
 
         function playTTS(audioId, callback) {
-            if (isMuted) {
+            if (isMuted || !hasTTS(audioId)) {
                 if (callback) callback();
                 return;
             }
-            
-            // Stop any currently playing TTS
-            if (currentTTS) {
-                currentTTS.pause();
-                currentTTS.currentTime = 0;
+
+            const src = ttsCache[audioId] || TTS_FILES[audioId];
+            if (!src) {
+                if (callback) callback();
+                return;
             }
-            
-            const audio = document.getElementById(audioId);
-            if (audio) {
-                audio.volume = 0.8;
-                audio.currentTime = 0;
-                currentTTS = audio;
-                
-                if (callback) {
-                    audio.onended = callback;
+
+            // Avbryt pågående replik och ersätt dess callback
+            ttsPlayer.pause();
+            ttsPlayer.onended = callback || null;
+            ttsPlayer.src = src;
+            ttsPlayer.volume = 0.8;
+
+            ttsPlayer.play().catch(e => {
+                console.log('TTS play failed:', e);
+                // Låt inte t.ex. räkneanimationen fastna om ljudet inte kan spelas
+                if (e.name !== 'AbortError' && callback && ttsPlayer.onended === callback) {
+                    ttsPlayer.onended = null;
+                    callback();
                 }
-                
-                audio.play().catch(e => console.log('TTS play failed:', e));
-            } else if (callback) {
-                callback();
-            }
+            });
         }
 
         function playRandomPikaRatt() {
@@ -2733,10 +3213,10 @@
             playTTS(randomId);
         }
 
-        function playRandomGrattis() {
+        function playRandomGrattis(callback) {
             const options = ['pika_grattis', 'pika_toppen'];
             const randomId = options[Math.floor(Math.random() * options.length)];
-            playTTS(randomId);
+            playTTS(randomId, callback);
         }
 
         function playRandomProfFel(callback) {
@@ -2769,63 +3249,115 @@
             brown: 'prof_tryck_brun'
         };
 
-        function playCountingAnimation(correctCount, callback) {
-            // Animera räkning: 1... 2... 3... etc
-            const pokemons = document.querySelectorAll('.pokemon-to-count');
-            let currentNum = 0;
-            
-            function countNext() {
-                if (currentNum < correctCount) {
-                    currentNum++;
-                    
-                    // Highlighta aktuell Pokémon
-                    if (pokemons[currentNum - 1]) {
-                        pokemons[currentNum - 1].style.transform = 'scale(1.3)';
-                        pokemons[currentNum - 1].style.filter = 'drop-shadow(0 0 10px gold)';
-                    }
-                    
-                    // Spela siffran
-                    const ttsId = numberToTTS[currentNum];
-                    if (ttsId) {
-                        playTTS(ttsId, () => {
-                            setTimeout(countNext, 300);
-                        });
-                    } else {
-                        setTimeout(countNext, 500);
-                    }
-                } else {
-                    // Färdig med räkning
-                    setTimeout(() => {
-                        if (callback) callback();
-                    }, 500);
-                }
+        // ============ TRYCK OCH RÄKNA ============
+        // Varje sak som ska räknas har klassen "countable" och ett nummermärke.
+        // Lukas trycker på dem en i taget och Pikachu säger talet.
+        let countState = null;
+
+        function setupCountables(items, onAllCounted) {
+            countState = { items, count: 0, onAllCounted, locked: false };
+        }
+
+        function markCounted(el) {
+            countState.count++;
+            const n = countState.count;
+            const badge = el.querySelector('.count-badge, .count-badge-svg');
+            if (badge) badge.textContent = n;
+            el.classList.add('counted');
+            el.classList.remove('hop');
+            void el.getBoundingClientRect(); // starta om hopp-animationen
+            el.classList.add('hop');
+            return n;
+        }
+
+        function countItem(el) {
+            if (!countState || countState.locked) return;
+            if (!countState.items.includes(el) || el.classList.contains('counted')) return;
+
+            const n = markCounted(el);
+            const allDone = countState.count === countState.items.length;
+            const state = countState;
+            playTTS(numberToTTS[n], allDone ? () => {
+                if (countState === state && state.onAllCounted) state.onAllCounted();
+            } : undefined);
+        }
+
+        // Spelet räknar alla saker högt, en i taget
+        function autoCount(done) {
+            const state = countState;
+            if (!state) {
+                if (done) done();
+                return;
             }
-            
-            // Starta räkning efter en kort paus
-            setTimeout(countNext, 500);
+
+            state.items.forEach(el => el.classList.remove('counted'));
+            state.count = 0;
+            state.locked = true;
+            const token = ttsToken;
+            let i = 0;
+
+            function step() {
+                if (token !== ttsToken || countState !== state) return;
+                if (i >= state.items.length) {
+                    state.locked = false;
+                    if (done) setTimeout(done, 300);
+                    return;
+                }
+                const n = markCounted(state.items[i++]);
+                playTTS(numberToTTS[n], () => setTimeout(step, 250));
+            }
+
+            step();
+        }
+
+        // Tryck var som helst på handen så tänds nästa finger
+        function tapHand(svg, event) {
+            if (!countState || countState.locked) return;
+            const finger = event.target.closest('.countable');
+            if (finger && !finger.classList.contains('counted')) {
+                countItem(finger);
+                return;
+            }
+            const next = countState.items.find(el => svg.contains(el) && !el.classList.contains('counted'));
+            if (next) countItem(next);
+        }
+
+        function inviteAnswer(selector) {
+            document.querySelectorAll(selector).forEach(btn => {
+                btn.classList.remove('invite');
+                void btn.offsetWidth;
+                btn.classList.add('invite');
+            });
+        }
+
+        // 🔊-knappen: hör frågan igen
+        let repeatQuestion = null;
+
+        function repeatCurrentQuestion() {
+            if (countState && countState.locked) return;
+            if (repeatQuestion) repeatQuestion();
         }
 
         // ============ POKEMON DATA ============
+        // Bara Pokémon som tydligt har EN färg. Psyduck (beige), Scorbunny (vit),
+        // Hawlucha (grön/röd), Charizard (blågröna vingar), Zubat (blå/lila) och
+        // Krabby/Charmeleon mot Charmander (röd/orange) gjorde att rätt svar räknades som fel.
         const pokemonData = {
             yellow: [
                 { name: 'Pikachu', img: 'Pikachu.png' },
-                { name: 'Pichu', img: 'Pichu.png' },
-                { name: 'Psyduck', img: 'Psyduck.png' }
+                { name: 'Pichu', img: 'Pichu.png' }
             ],
             orange: [
-                { name: 'Charmander', img: 'Charmander.png' },
-                { name: 'Charizard', img: 'Charizard.png' },
-                { name: 'Krabby', img: 'Krabby.png' }
+                { name: 'Charmander', img: 'Charmander.png' }
             ],
             red: [
                 { name: 'Charmeleon', img: 'Charmeleon.png' },
-                { name: 'Hawlucha', img: 'Hawlucha.png' },
-                { name: 'Scorbunny', img: 'Scorbunny.png' }
+                { name: 'Krabby', img: 'Krabby.png' }
             ],
             blue: [
                 { name: 'Squirtle', img: 'Squirtle.png' },
                 { name: 'Froakie', img: 'Froakie.png' },
-                { name: 'Riolu', img: 'Riolu.png' }
+                { name: 'Wartortle', img: 'Wartortle.png' }
             ],
             green: [
                 { name: 'Caterpie', img: 'Caterpie.png' },
@@ -2833,8 +3365,7 @@
             ],
             purple: [
                 { name: 'Ekans', img: 'Ekans.png' },
-                { name: 'Rattata', img: 'Rattata.png' },
-                { name: 'Zubat', img: 'Zubat.png' }
+                { name: 'Rattata', img: 'Rattata.png' }
             ],
             pink: [
                 { name: 'Mew', img: 'Mew.png' }
@@ -2845,7 +3376,30 @@
             ]
         };
 
-        const allPokemon = Object.values(pokemonData).flat();
+        // Färger som lätt blandas ihop används aldrig som fel alternativ till varandra
+        const confusableColors = {
+            yellow: ['orange', 'brown'],
+            orange: ['red', 'yellow', 'brown'],
+            red: ['orange', 'pink', 'brown'],
+            blue: ['purple', 'green'],
+            green: ['blue'],
+            purple: ['pink', 'blue'],
+            pink: ['purple', 'red'],
+            brown: ['orange', 'yellow', 'red']
+        };
+
+        // Räknespelet använder alla Pokémon, även de som inte är med i färgjakten
+        const countingPokemon = [
+            ...Object.values(pokemonData).flat(),
+            { name: 'Psyduck', img: 'Psyduck.png' },
+            { name: 'Charizard', img: 'Charizard.png' },
+            { name: 'Scorbunny', img: 'Scorbunny.png' },
+            { name: 'Zubat', img: 'Zubat.png' },
+            { name: 'Riolu', img: 'Riolu.png' },
+            { name: 'Snorlax', img: 'Snorlax.png' },
+            { name: 'Meowth', img: 'Meowth.png' }
+        ];
+
 
         const colorNames = {
             yellow: 'GULA',
@@ -2867,9 +3421,13 @@
         ];
 
         const feedbackWrong = [
-            { text: 'NÄSTAN!', subtext: 'Försök igen!', img: 'Pikachu.png' },
-            { text: 'OJDÅ!', subtext: 'Det var inte riktigt rätt.', img: 'Charmander.png' }
+            { text: 'NÄSTAN!', subtext: 'Bra kämpat!', img: 'Pikachu.png' },
+            { text: 'BRA FÖRSÖK!', subtext: 'Nästa gång klarar du det!', img: 'Charmander.png' }
         ];
+
+        // Hur många gånger Lukas får försöka på varje fråga
+        const MAX_ATTEMPTS = 2;
+        let questionAttempts = 0;
 
         const introTexts = {
             counting: 'Hej <span class="highlight">Lukas</span>! Välkommen till Pokémon-förskolan! 🏫<br><br>Alla små Pokémon har sprungit ut och leker. Kan du hjälpa mig att <span class="highlight">RÄKNA</span> dem?',
@@ -2896,21 +3454,17 @@
         let currentDialogIndex = 0;
 
         function showWelcome() {
-            // Lås upp iOS-ljud först (synkront i user gesture)
-            unlockiOSAudio().then(() => {
-                currentDialogIndex = 0;
-                showScreen('welcomeScreen');
-                
-                // Starta musik efter kort fördröjning
-                setTimeout(() => {
-                    startMenuMusic();
-                }, 100);
-                
-                // Fördröj första dialogen lite för att musiken ska hinna starta
-                setTimeout(() => {
-                    showDialog();
-                }, 600);
-            });
+            // Lås upp iOS-ljud synkront i användargesten - utan att vänta på nedladdning
+            unlockiOSAudio();
+
+            currentDialogIndex = 0;
+            showScreen('welcomeScreen');
+            startMenuMusic();
+
+            // Fördröj första dialogen lite så att musiken hinner starta
+            setTimeout(() => {
+                showDialog();
+            }, 600);
         }
 
         function showDialog() {
@@ -2936,11 +3490,7 @@
             }
             
             // Uppdatera knapptext
-            if (currentDialogIndex >= welcomeDialogs.length - 1) {
-                btn.textContent = 'Börja! 🎮';
-            } else {
-                btn.textContent = 'Nästa →';
-            }
+            btn.textContent = currentDialogIndex >= welcomeDialogs.length - 1 ? '🎮' : '➜';
             
             // Spela ljud
             playTTS(dialog.audio);
@@ -2957,6 +3507,7 @@
         }
 
         function showMenu() {
+            stopTTS();
             stopAllAudio();
             startMenuMusic();
             showScreen('menuScreen');
@@ -2964,7 +3515,14 @@
         }
 
         // ============ GAME INITIALIZATION ============
-        function startGame(gameType) {
+        const menuClips = {
+            counting: 'meny_rakna',
+            colors: 'meny_farg',
+            matching: 'meny_para',
+            sequence: 'meny_sen'
+        };
+
+        function startGame(gameType, fromMenu) {
             currentGame = gameType;
             currentQuestion = 0;
             correctAnswers = 0;
@@ -2973,10 +3531,13 @@
             startIntroMusic();
             showScreen('introScreen');
             
-            // Spela intro-ljud efter kort paus
-            setTimeout(() => {
-                playTTS('prof_intro_' + gameType);
-            }, 500);
+            // Från menyn: säg först vad spelet heter, sedan Professor Eks intro
+            const intro = 'prof_intro_' + gameType;
+            if (fromMenu) {
+                playTTSChain([menuClips[gameType], intro]);
+            } else {
+                setTimeout(() => playTTS(intro), 500);
+            }
         }
 
         function startPlaying() {
@@ -2988,9 +3549,14 @@
             // Sätt rätt bakgrund för minispelet och visa spelskärmen
             const gameScreen = document.getElementById('gameScreen');
             gameScreen.className = 'screen active bg-' + currentGame;
+            document.getElementById('gameStars').innerHTML = '';
             
             startBgMusic();
             displayQuestion();
+        }
+
+        function otherColorsFor(targetColor, colorKeys) {
+            return colorKeys.filter(c => c !== targetColor && !confusableColors[targetColor].includes(c));
         }
 
         function generateQuestions() {
@@ -3013,7 +3579,7 @@
                     countPool.sort(() => Math.random() - 0.5);
                     
                     // Blanda också Pokémon för variation
-                    const shuffledPokemon = [...allPokemon].sort(() => Math.random() - 0.5);
+                    const shuffledPokemon = [...countingPokemon].sort(() => Math.random() - 0.5);
                     
                     for (let i = 0; i < totalQuestions; i++) {
                         const count = countPool[i];
@@ -3028,14 +3594,12 @@
                         const targetColor = colorKeys[Math.floor(Math.random() * colorKeys.length)];
                         const targetPokemon = pokemonData[targetColor][Math.floor(Math.random() * pokemonData[targetColor].length)];
                         
-                        // Get distractors from other colors
-                        const otherColors = colorKeys.filter(c => c !== targetColor);
-                        const distractors = [];
-                        for (let j = 0; j < 5; j++) {
-                            const distColor = otherColors[Math.floor(Math.random() * otherColors.length)];
-                            const distPokemon = pokemonData[distColor][Math.floor(Math.random() * pokemonData[distColor].length)];
-                            distractors.push({ ...distPokemon, color: distColor });
-                        }
+                        // Fel alternativ: olika Pokémon, bara från färger som inte liknar rätt färg
+                        const allowedColors = otherColorsFor(targetColor, colorKeys);
+                        const distractors = allowedColors
+                            .flatMap(c => pokemonData[c].map(p => ({ ...p, color: c })))
+                            .sort(() => Math.random() - 0.5)
+                            .slice(0, 5);
                         
                         questions.push({ 
                             targetColor, 
@@ -3122,36 +3686,47 @@
         function displayQuestion() {
             const q = questions[currentQuestion];
             const gameArea = document.getElementById('gameArea');
-            const questionEl = document.getElementById('gameQuestion');
+            const questionEl = document.getElementById('gameQuestionText');
             
+            questionAttempts = 0;
+            countState = null;
             updateProgress();
             
             switch(currentGame) {
-                case 'counting':
+                case 'counting': {
                     questionEl.textContent = `Hur många ${q.pokemon.name} ser du?`;
-                    
-                    // Lägg till Pokémon i samlingen
-                    addToCollection(q.pokemon.name.toLowerCase());
                     
                     let pokemonHtml = '<div class="pokemon-display">';
                     for (let i = 0; i < q.count; i++) {
-                        pokemonHtml += `<img src="${q.pokemon.img}" alt="${q.pokemon.name}" class="pokemon-to-count">`;
+                        pokemonHtml += `<div class="countable" onclick="countItem(this)">
+                            <img src="${q.pokemon.img}" alt="${q.pokemon.name}" class="pokemon-to-count" style="animation-delay: ${0.1 * (i + 1)}s">
+                            <span class="count-badge"></span>
+                        </div>`;
                     }
                     pokemonHtml += '</div>';
                     
+                    // Minst 1-5, men på Svår kan det vara upp till 7 Pokémon
+                    const maxButton = Math.max(5, getDifficultySettings().maxNumber);
                     pokemonHtml += '<div class="number-buttons">';
-                    for (let i = 1; i <= 5; i++) {
-                        pokemonHtml += `<button class="number-btn" onclick="checkCountingAnswer(${i}, ${q.count})">${i}</button>`;
+                    for (let i = 1; i <= maxButton; i++) {
+                        pokemonHtml += `<button class="number-btn" data-value="${i}" onclick="checkCountingAnswer(${i}, ${q.count}, this)">${i}</button>`;
                     }
                     pokemonHtml += '</div>';
                     
                     gameArea.innerHTML = pokemonHtml;
                     
-                    // Spela TTS
-                    setTimeout(() => playTTS('prof_hur_manga'), 300);
-                    break;
+                    setupCountables([...gameArea.querySelectorAll('.countable')], () => {
+                        playTTS('prof_hur_manga_tillsammans');
+                        inviteAnswer('#gameArea .number-btn:not(:disabled)');
+                    });
                     
-                case 'colors':
+                    repeatQuestion = () => playTTSChain(['prof_hur_manga', 'prof_tryck_rakna']);
+                    const clips = currentQuestion === 0 ? ['prof_hur_manga', 'prof_tryck_rakna'] : ['prof_hur_manga'];
+                    setTimeout(() => playTTSChain(clips), 300);
+                    break;
+                }
+                    
+                case 'colors': {
                     const colorClass = q.targetColor;
                     questionEl.innerHTML = `Tryck på den <span class="color-word ${colorClass}">${colorNames[q.targetColor]}</span> Pokémon!`;
                     
@@ -3159,12 +3734,9 @@
                     let pokemons = [q.targetPokemon, ...q.distractors.slice(0, 5)];
                     pokemons.sort(() => Math.random() - 0.5);
                     
-                    // Lägg till alla visade Pokémon i samlingen
-                    pokemons.forEach(p => addToCollection(p.name.toLowerCase()));
-                    
                     let colorHtml = '<div class="color-pokemon-grid">';
-                    pokemons.forEach((p, idx) => {
-                        colorHtml += `<button class="color-pokemon-btn" onclick="checkColorAnswer('${p.color}', '${q.targetColor}', this)">
+                    pokemons.forEach(p => {
+                        colorHtml += `<button class="color-pokemon-btn" data-color="${p.color}" onclick="checkColorAnswer('${p.color}', '${q.targetColor}', this)">
                             <img src="${p.img}" alt="${p.name}">
                         </button>`;
                     });
@@ -3172,107 +3744,154 @@
                     
                     gameArea.innerHTML = colorHtml;
                     
-                    // Spela TTS för rätt färg
-                    setTimeout(() => playTTS(colorToTTS[q.targetColor]), 300);
+                    repeatQuestion = () => playTTS(colorToTTS[q.targetColor]);
+                    setTimeout(repeatQuestion, 300);
                     break;
+                }
                     
-                case 'matching':
+                case 'matching': {
                     questionEl.innerHTML = `Vilken sida har <span style="color: var(--pokemon-blue); font-weight: 700;">${q.number}</span> stycken?`;
                     
+                    const ballsHtml = count => {
+                        let html = '';
+                        for (let i = 0; i < count; i++) {
+                            html += '<span class="countable"><img src="Pokeball.png" alt="Pokéball"><span class="count-badge"></span></span>';
+                        }
+                        return html;
+                    };
+                    
                     let matchHtml = '<div class="matching-container">';
-                    
-                    // Left side
-                    matchHtml += `<div class="matching-side" onclick="checkMatchingAnswer('left', '${q.correctSide}', this)">`;
-                    for (let i = 0; i < q.leftCount; i++) {
-                        matchHtml += `<img src="Pokeball.png" alt="Pokéball">`;
-                    }
-                    matchHtml += '</div>';
-                    
-                    // Number in middle
+                    matchHtml += `<div class="matching-side" data-side="left" onclick="checkMatchingAnswer('left', '${q.correctSide}', this)">${ballsHtml(q.leftCount)}</div>`;
                     matchHtml += `<div class="matching-number">${q.number}</div>`;
-                    
-                    // Right side
-                    matchHtml += `<div class="matching-side" onclick="checkMatchingAnswer('right', '${q.correctSide}', this)">`;
-                    for (let i = 0; i < q.rightCount; i++) {
-                        matchHtml += `<img src="Pokeball.png" alt="Pokéball">`;
-                    }
-                    matchHtml += '</div>';
-                    
+                    matchHtml += `<div class="matching-side" data-side="right" onclick="checkMatchingAnswer('right', '${q.correctSide}', this)">${ballsHtml(q.rightCount)}</div>`;
                     matchHtml += '</div>';
                     
                     gameArea.innerHTML = matchHtml;
                     
-                    // Spela TTS
-                    setTimeout(() => playTTS('prof_vilken_sida'), 300);
+                    // Pikachu säger talet efter frågan, så att han inte behöver känna igen siffran
+                    repeatQuestion = () => playTTSChain(['prof_vilken_sida', numberToTTS[q.number]]);
+                    setTimeout(repeatQuestion, 300);
                     break;
+                }
                     
-                case 'sequence':
+                case 'sequence': {
                     questionEl.textContent = 'Vad kommer efter?';
                     
+                    const balls = count => '<img src="Pokeball.png" alt="">'.repeat(count);
+                    
                     let seqHtml = '<div class="sequence-display">';
-                    seqHtml += `<div class="sequence-number">${q.first}</div>`;
+                    seqHtml += `<div class="sequence-item"><div class="sequence-number" id="seqFirst">${q.first}</div><div class="sequence-balls">${balls(q.first)}</div></div>`;
                     seqHtml += '<span class="sequence-arrow">→</span>';
-                    seqHtml += `<div class="sequence-number">${q.second}</div>`;
+                    seqHtml += `<div class="sequence-item"><div class="sequence-number" id="seqSecond">${q.second}</div><div class="sequence-balls">${balls(q.second)}</div></div>`;
                     seqHtml += '<span class="sequence-arrow">→</span>';
-                    seqHtml += '<div class="sequence-mystery">?</div>';
+                    seqHtml += '<div class="sequence-item"><div class="sequence-mystery" id="seqMystery">?</div><div class="sequence-balls" id="seqMysteryBalls"></div></div>';
                     seqHtml += '</div>';
                     
                     seqHtml += '<div class="number-buttons">';
                     q.options.forEach(opt => {
-                        seqHtml += `<button class="number-btn" onclick="checkSequenceAnswer(${opt}, ${q.answer})">${opt}</button>`;
+                        seqHtml += `<button class="number-btn" data-value="${opt}" onclick="checkSequenceAnswer(${opt}, ${q.answer}, this)">${opt}</button>`;
                     });
                     seqHtml += '</div>';
                     
                     gameArea.innerHTML = seqHtml;
                     
-                    // Spela TTS
-                    setTimeout(() => playTTS('prof_vad_kommer'), 300);
+                    repeatQuestion = () => playTTSChain(sequenceClips(q), () => highlightSequence(null));
+                    setTimeout(repeatQuestion, 300);
                     break;
+                }
             }
+        }
+
+        // Pikachu säger de två talen medan de lyser upp, sedan frågar Professor Ek
+        function highlightSequence(id) {
+            ['seqFirst', 'seqSecond', 'seqMystery'].forEach(elId => {
+                const el = document.getElementById(elId);
+                if (el) el.classList.toggle('speaking', elId === id);
+            });
+        }
+
+        function sequenceClips(q) {
+            return [
+                { id: numberToTTS[q.first], onStart: () => highlightSequence('seqFirst') },
+                { id: numberToTTS[q.second], onStart: () => highlightSequence('seqSecond') },
+                { id: 'prof_vad_kommer', onStart: () => highlightSequence('seqMystery') }
+            ];
+        }
+
+        function revealSequenceAnswer(q) {
+            const mystery = document.getElementById('seqMystery');
+            mystery.textContent = q.answer;
+            mystery.style.animation = 'none';
+            document.getElementById('seqMysteryBalls').innerHTML = '<img src="Pokeball.png" alt="">'.repeat(q.answer);
         }
 
         function updateProgress() {
             document.getElementById('gameProgress').textContent = `${currentQuestion + 1} / ${totalQuestions}`;
             
-            const stars = document.querySelectorAll('#gameStars .star');
-            stars.forEach((star, idx) => {
-                if (idx < correctAnswers) {
-                    star.classList.add('earned');
-                } else {
-                    star.classList.remove('earned');
-                }
-            });
+            // Visa bara stjärnor som är vunna - inga tomma
+            const starsEl = document.getElementById('gameStars');
+            while (starsEl.children.length < correctAnswers) {
+                const star = document.createElement('span');
+                star.className = 'star earned';
+                star.textContent = '⭐';
+                starsEl.appendChild(star);
+            }
         }
 
         // ============ ANSWER CHECKING ============
-        function checkCountingAnswer(selected, correct) {
-            const buttons = document.querySelectorAll('.number-btn');
+        // Första felet: hjälp och ett nytt försök. Andra felet: visa rätt svar.
+        function checkCountingAnswer(selected, correct, clickedBtn) {
+            const buttons = document.querySelectorAll('#gameArea .number-btn');
             buttons.forEach(btn => btn.disabled = true);
-            
-            const clickedBtn = [...buttons].find(btn => btn.textContent == selected);
             
             if (selected === correct) {
                 clickedBtn.classList.add('correct');
                 showFeedback(true);
+                return;
+            }
+            
+            clickedBtn.classList.add('wrong');
+            questionAttempts++;
+            
+            if (questionAttempts < MAX_ATTEMPTS) {
+                // Räkna tillsammans och låt honom välja igen
+                playTTS('prof_vi_raknar', () => autoCount(() => {
+                    playTTS('prof_hur_manga_tillsammans');
+                    buttons.forEach(btn => { if (!btn.classList.contains('wrong')) btn.disabled = false; });
+                    inviteAnswer('#gameArea .number-btn:not(:disabled)');
+                }));
             } else {
-                clickedBtn.classList.add('wrong');
-                showFeedback(false, `Det var ${correct} stycken!`, correct);
+                buttons.forEach(btn => { if (+btn.dataset.value === correct) btn.classList.add('correct'); });
+                showFeedback(false, `Det var ${correct} stycken!`);
             }
         }
 
         function checkColorAnswer(selectedColor, correctColor, element) {
             const buttons = document.querySelectorAll('.color-pokemon-btn');
-            buttons.forEach(btn => btn.style.pointerEvents = 'none');
             
             if (selectedColor === correctColor) {
+                buttons.forEach(btn => btn.style.pointerEvents = 'none');
                 element.classList.add('correct');
                 showFeedback(true);
+                return;
+            }
+            
+            element.classList.add('wrong');
+            element.style.pointerEvents = 'none';
+            questionAttempts++;
+            
+            if (questionAttempts < MAX_ATTEMPTS) {
+                playTTSChain(['prof_forsok_igen', colorToTTS[correctColor]]);
             } else {
-                element.classList.add('wrong');
-                showFeedback(false, `Det var inte ${colorNames[correctColor].toLowerCase()}!`);
+                buttons.forEach(btn => {
+                    btn.style.pointerEvents = 'none';
+                    if (btn.dataset.color === correctColor) btn.classList.add('correct');
+                });
+                showFeedback(false, `Titta, här är den ${colorNames[correctColor].toLowerCase()}!`);
             }
         }
 
+        // Två sidor - ett nytt försök vore bara gissning. Visa rätt sida och räkna den i stället.
         function checkMatchingAnswer(selectedSide, correctSide, element) {
             const sides = document.querySelectorAll('.matching-side');
             sides.forEach(s => s.style.pointerEvents = 'none');
@@ -3280,41 +3899,57 @@
             if (selectedSide === correctSide) {
                 element.classList.add('correct');
                 showFeedback(true);
-            } else {
-                element.classList.add('wrong');
-                // Highlight correct side
-                sides.forEach(s => {
-                    if (!s.classList.contains('wrong')) {
-                        s.classList.add('correct');
-                    }
-                });
-                showFeedback(false, 'Det var den andra sidan!');
+                return;
             }
+            
+            element.classList.add('wrong');
+            const correctEl = document.querySelector(`.matching-side[data-side="${correctSide}"]`);
+            correctEl.classList.add('correct');
+            
+            setupCountables([...correctEl.querySelectorAll('.countable')]);
+            playTTS('prof_andra_sidan', () => autoCount(() => {
+                showFeedback(false, 'Det var den andra sidan!');
+            }));
         }
 
-        function checkSequenceAnswer(selected, correct) {
-            const buttons = document.querySelectorAll('.number-btn');
+        function checkSequenceAnswer(selected, correct, clickedBtn) {
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('#gameArea .number-btn');
             buttons.forEach(btn => btn.disabled = true);
-            
-            const clickedBtn = [...buttons].find(btn => btn.textContent == selected);
             
             if (selected === correct) {
                 clickedBtn.classList.add('correct');
+                revealSequenceAnswer(q);
                 showFeedback(true);
+                return;
+            }
+            
+            clickedBtn.classList.add('wrong');
+            questionAttempts++;
+            
+            if (questionAttempts < MAX_ATTEMPTS) {
+                // Ledtråd: lika många bollar som förra talet, plus en ny som blinkar
+                document.getElementById('seqMysteryBalls').innerHTML =
+                    '<img src="Pokeball.png" alt="" class="hint">'.repeat(q.second) +
+                    '<img src="Pokeball.png" alt="" class="hint-new">';
+                playTTSChain(['prof_forsok_igen', ...sequenceClips(q)], () => {
+                    highlightSequence(null);
+                    buttons.forEach(btn => { if (!btn.classList.contains('wrong')) btn.disabled = false; });
+                });
             } else {
-                clickedBtn.classList.add('wrong');
-                showFeedback(false, `Rätt svar var ${correct}!`);
+                buttons.forEach(btn => { if (+btn.dataset.value === correct) btn.classList.add('correct'); });
+                revealSequenceAnswer(q);
+                showFeedback(false, `Efter ${q.second} kommer ${correct}!`);
             }
         }
 
         // ============ FEEDBACK ============
-        function showFeedback(isCorrect, extraMessage = '', correctCount = 0) {
+        function showFeedback(isCorrect, extraMessage = '') {
             const overlay = document.getElementById('feedbackOverlay');
             const card = document.getElementById('feedbackCard');
             const pokemon = document.getElementById('feedbackPokemon');
             const text = document.getElementById('feedbackText');
             const subtext = document.getElementById('feedbackSubtext');
-            const btn = document.getElementById('feedbackBtn');
             
             if (isCorrect) {
                 correctAnswers++;
@@ -3326,9 +3961,6 @@
                 
                 // Spela Pikachu-ljud
                 playRandomPikaRatt();
-                
-                // Visa overlay direkt
-                overlay.classList.add('active');
             } else {
                 const fb = feedbackWrong[Math.floor(Math.random() * feedbackWrong.length)];
                 card.className = 'feedback-card wrong';
@@ -3336,30 +3968,17 @@
                 text.textContent = fb.text;
                 subtext.textContent = extraMessage || fb.subtext;
                 
-                // Om counting-spel: visa animerad räkning först
-                if (currentGame === 'counting' && correctCount > 0) {
-                    playRandomProfFel(() => {
-                        playCountingAnimation(correctCount, () => {
-                            overlay.classList.add('active');
-                        });
-                    });
-                } else {
-                    // Andra spel: visa feedback direkt
-                    playRandomProfFel();
-                    overlay.classList.add('active');
-                }
+                playRandomProfFel();
             }
             
-            // Update button text
-            if (currentQuestion >= totalQuestions - 1) {
-                btn.textContent = 'KLAR! 🎉';
-            } else {
-                btn.textContent = 'NÄSTA →';
-            }
+            // Låt honom se rätt svar en kort stund innan rutan kommer
+            setTimeout(() => overlay.classList.add('active'), isCorrect ? 0 : 600);
         }
 
         function nextQuestion() {
-            document.getElementById('feedbackOverlay').classList.remove('active');
+            const overlay = document.getElementById('feedbackOverlay');
+            if (!overlay.classList.contains('active')) return;
+            overlay.classList.remove('active');
             
             currentQuestion++;
             
@@ -3380,38 +3999,94 @@
             gameStats.correctAnswers += correctAnswers;
             saveStats();
             
-            // Show earned stars
-            let starHtml = '';
-            for (let i = 0; i < totalQuestions; i++) {
-                starHtml += i < correctAnswers ? '⭐' : '☆';
-            }
-            starsEl.textContent = starHtml;
+            // Bara vunna stjärnor - inga tomma
+            starsEl.textContent = correctAnswers > 0 ? '⭐'.repeat(correctAnswers) : '💪';
             
-            // Custom message based on score
             if (correctAnswers === totalQuestions) {
                 messageEl.textContent = 'WOW! Du fick alla rätt! Du är en Pokémon-mästare! 🏆';
-            } else if (correctAnswers >= 4) {
-                messageEl.textContent = 'Fantastiskt bra jobbat, Lukas! 🌟';
             } else if (correctAnswers >= 3) {
-                messageEl.textContent = 'Bra jobbat! Fortsätt träna! 💪';
+                messageEl.textContent = 'Fantastiskt bra jobbat, Lukas! 🌟';
             } else {
-                messageEl.textContent = 'Bra försök! Vill du prova igen? 🎮';
+                messageEl.textContent = 'Bra kämpat, Lukas! Du blir bättre och bättre! 💪';
             }
             
-            // Play catch sound and stop bg music
-            playCatchSound();
-            
-            // Spela Pikachu grattis-ljud efter catch-ljudet
-            setTimeout(() => {
-                playRandomGrattis();
-            }, 1500);
+            if (currentBgMusic) fadeOutAudio(currentBgMusic, 500);
             
             showScreen('completionScreen');
             createConfetti();
+            
+            // Grattis från Pikachu, sedan får han fånga en Pokémon
+            setTimeout(() => {
+                playRandomGrattis(() => setTimeout(() => openCatch('completionScreen'), 300));
+            }, 800);
+        }
+
+        // ============ FÅNGA POKÉMON ============
+        let catchInProgress = false;
+
+        function openCatch(screenId) {
+            // Har han redan gått vidare ska ingen Pokéboll dyka upp
+            if (!document.getElementById(screenId).classList.contains('active')) return;
+            
+            const ball = document.getElementById('catchBall');
+            ball.style.display = '';
+            ball.classList.remove('shaking');
+            document.getElementById('catchPokemon').style.display = 'none';
+            document.getElementById('catchName').textContent = '';
+            document.getElementById('catchTitle').textContent = 'Fånga en Pokémon!';
+            document.getElementById('catchDoneBtn').style.display = 'none';
+            catchInProgress = false;
+            
+            document.getElementById('catchOverlay').classList.add('active');
+            playTTS('prof_kasta_boll');
+        }
+
+        function pickPokemonToCatch() {
+            const all = Object.keys(pokemonCollection);
+            const notCaught = all.filter(key => !collectedPokemon.includes(key));
+            const pool = notCaught.length > 0 ? notCaught : all;
+            return pool[Math.floor(Math.random() * pool.length)];
+        }
+
+        function throwBall() {
+            if (catchInProgress) return;
+            catchInProgress = true;
+            
+            const ball = document.getElementById('catchBall');
+            ball.classList.add('shaking');
+            playCatchSound();
+            
+            setTimeout(() => {
+                const key = pickPokemonToCatch();
+                const pokemon = pokemonCollection[key];
+                const isNew = !collectedPokemon.includes(key);
+                addToCollection(key);
+                
+                ball.style.display = 'none';
+                const img = document.getElementById('catchPokemon');
+                img.src = pokemon.img;
+                img.alt = pokemon.name;
+                img.style.display = 'block';
+                document.getElementById('catchName').textContent = pokemon.name;
+                document.getElementById('catchTitle').textContent = isNew ? 'Du fångade en ny Pokémon!' : 'Du fångade en till!';
+                document.getElementById('catchDoneBtn').style.display = 'inline-flex';
+                
+                createConfetti();
+                if (isNew) {
+                    playTTS('prof_fangade');
+                } else {
+                    playRandomPikaRatt();
+                }
+            }, 1900);
+        }
+
+        function closeCatch() {
+            document.getElementById('catchOverlay').classList.remove('active');
+            updateCollectionCount();
         }
 
         function replayGame() {
-            startGame(currentGame);
+            startGame(currentGame, false);
         }
 
         // ============ CONFETTI ============
@@ -3442,8 +4117,8 @@
             
             const key = e.key;
             
-            // Handle number keys 1-5
-            if (key >= '1' && key <= '5') {
+            // Handle number keys 1-9
+            if (key >= '1' && key <= '9') {
                 e.preventDefault();
                 const num = parseInt(key);
                 const buttons = document.querySelectorAll('.number-btn');
@@ -3515,7 +4190,7 @@
         function updateStatsDisplay() {
             document.getElementById('statTotalGames').textContent = gameStats.totalGames;
             document.getElementById('statCorrectAnswers').textContent = gameStats.correctAnswers;
-            document.getElementById('statCollected').textContent = collectedPokemon.length;
+            document.getElementById('statCollected').textContent = countCollected();
             document.getElementById('statBattlesWon').textContent = gameStats.battlesWon;
         }
 
@@ -3587,6 +4262,8 @@
         let isPlayerTurn = true;
 
         function startBattle() {
+            stopTTS();
+            playTTS('meny_match');
             showScreen('battleSelectScreen');
             renderBattleSelect();
         }
@@ -3620,10 +4297,6 @@
             opponentHealth = settings.hearts;
             isPlayerTurn = true;
             
-            // Lägg till i samling
-            addToCollection(pokemon.name.toLowerCase());
-            addToCollection(opponentPokemon.name.toLowerCase());
-            
             startBattleRound();
         }
 
@@ -3648,6 +4321,51 @@
             opponentHeartsEl.textContent = '❤️'.repeat(opponentHealth) + '🖤'.repeat(getDifficultySettings().hearts - opponentHealth);
         }
 
+        // Ritar en hand med n uppräckta fingrar. Fingrarna räcks upp i ordningen
+        // pekfinger, långfinger, ringfinger, lillfinger, tumme - som när man räknar på handen.
+        function handSVG(n, mirrored) {
+            const W = 18;
+            const BOTTOM = 100;
+            const FOLDED_TOP = 72;
+            const fingers = [
+                { x: 26, top: 18 },
+                { x: 47, top: 6 },
+                { x: 68, top: 14 },
+                { x: 88, top: 32 }
+            ];
+            const mx = x => mirrored ? 124 - x - W : x;
+            
+            const fingerHtml = (x, top, height, up, transform = '') => {
+                const cls = up ? 'finger countable' : 'finger-folded';
+                return `<g class="${cls}"><g${transform ? ` transform="${transform}"` : ''}>
+                    <rect x="${x}" y="${top}" width="${W}" height="${height}" rx="9"></rect>
+                    ${up ? `<text class="count-badge-svg" x="${x + W / 2}" y="${top - 6}" text-anchor="middle"></text>` : ''}
+                </g></g>`;
+            };
+            
+            let parts = '';
+            fingers.forEach((f, i) => {
+                const up = i < n;
+                const top = up ? f.top : FOLDED_TOP;
+                parts += fingerHtml(mx(f.x), top, BOTTOM - top, up);
+            });
+            
+            // Tummen sitter på sidan och lutar utåt när den är uppe
+            const thumbUp = n >= 5;
+            const thumbX = mx(10);
+            const thumbTop = thumbUp ? 58 : 90;
+            const pivotX = thumbX + W / 2;
+            const angle = (thumbUp ? 30 : 0) * (mirrored ? 1 : -1);
+            parts += fingerHtml(thumbX, thumbTop, 114 - thumbTop, thumbUp, `rotate(${angle} ${pivotX} 114)`);
+            
+            const palmX = mirrored ? 124 - 22 - 86 : 22;
+            parts += `<rect class="palm" x="${palmX}" y="78" width="86" height="74" rx="28"></rect>`;
+            
+            return `<svg class="hand-svg" viewBox="-30 -22 184 180" onclick="tapHand(this, event)" role="img" aria-label="${n} fingrar">${parts}</svg>`;
+        }
+
+        let battleAttempts = 0;
+
         function showBattleQuestion() {
             const settings = getDifficultySettings();
             const messageEl = document.getElementById('battleMessage');
@@ -3655,57 +4373,97 @@
             const answersEl = document.getElementById('battleAnswers');
             
             if (isPlayerTurn) {
-                messageEl.textContent = `${playerPokemon.name} vill attackera! Lös uppgiften!`;
+                messageEl.textContent = `${playerPokemon.name} vill attackera! Hur många fingrar?`;
             } else {
                 messageEl.textContent = `${opponentPokemon.name} attackerar! Försvara dig!`;
             }
             
-            // Generera matteproblem
-            const num1 = Math.floor(Math.random() * settings.maxNumber) + 1;
-            const num2 = Math.floor(Math.random() * (settings.maxNumber - num1 + 1));
+            // Högst 5 per hand, och summan högst maxNumber
+            const maxSum = settings.maxNumber;
+            const num1 = Math.floor(Math.random() * Math.min(5, maxSum - 1)) + 1;
+            const num2 = Math.floor(Math.random() * Math.min(5, maxSum - num1)) + 1;
             const correctAnswer = num1 + num2;
             
-            mathEl.textContent = `${num1} + ${num2} = ?`;
+            mathEl.innerHTML = `
+                <div class="hands-row">
+                    ${handSVG(num1, false)}
+                    <span class="hand-op">+</span>
+                    ${handSVG(num2, true)}
+                </div>
+                <div class="battle-math-small">${num1} + ${num2} = ?</div>`;
             
             // Generera svarsalternativ
+            const maxOption = Math.max(maxSum + 1, 4);
             let options = [correctAnswer];
             while (options.length < 4) {
-                const wrong = Math.floor(Math.random() * (settings.maxNumber * 2)) + 1;
+                const wrong = Math.floor(Math.random() * maxOption) + 1;
                 if (!options.includes(wrong)) {
                     options.push(wrong);
                 }
             }
-            options.sort(() => Math.random() - 0.5);
+            options.sort((a, b) => a - b);
             
             answersEl.innerHTML = '';
             options.forEach(opt => {
                 const btn = document.createElement('button');
                 btn.className = 'battle-answer-btn';
                 btn.textContent = opt;
-                btn.onclick = () => checkBattleAnswer(opt, correctAnswer);
+                btn.dataset.value = opt;
+                btn.onclick = () => checkBattleAnswer(opt, correctAnswer, btn);
                 answersEl.appendChild(btn);
             });
+            
+            battleAttempts = 0;
+            // Räkna från vänster till höger över båda händerna
+            const leftOf = el => el.getBoundingClientRect().left;
+            const fingersInOrder = [...mathEl.querySelectorAll('.hand-svg')].flatMap(hand =>
+                [...hand.querySelectorAll('.countable')].sort((a, b) => leftOf(a) - leftOf(b)));
+            setupCountables(fingersInOrder, () => {
+                playTTS('prof_hur_manga_tillsammans');
+                inviteAnswer('.battle-answer-btn:not(:disabled)');
+            });
+            
+            const turnClip = isPlayerTurn ? 'prof_din_tur' : 'prof_forsvara';
+            repeatQuestion = () => playTTSChain([turnClip, 'prof_tillsammans']);
+            setTimeout(repeatQuestion, 300);
         }
 
-        function checkBattleAnswer(selected, correct) {
+        function checkBattleAnswer(selected, correct, clickedBtn) {
             const buttons = document.querySelectorAll('.battle-answer-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (selected !== correct) {
+                battleAttempts++;
+                if (battleAttempts < MAX_ATTEMPTS) {
+                    // Räkna fingrarna tillsammans och låt honom välja igen
+                    clickedBtn.classList.add('wrong');
+                    playTTS('prof_vi_raknar', () => autoCount(() => {
+                        playTTS('prof_hur_manga_tillsammans');
+                        buttons.forEach(btn => { if (!btn.classList.contains('wrong')) btn.disabled = false; });
+                        inviteAnswer('.battle-answer-btn:not(:disabled)');
+                    }));
+                    return;
+                }
+            }
+            
             buttons.forEach(btn => {
-                btn.disabled = true;
-                if (parseInt(btn.textContent) === correct) {
+                if (+btn.dataset.value === correct) {
                     btn.classList.add('correct');
-                } else if (parseInt(btn.textContent) === selected && selected !== correct) {
+                } else if (+btn.dataset.value === selected) {
                     btn.classList.add('wrong');
                 }
             });
-            
-            gameStats.totalGames++;
             
             if (selected === correct) {
                 gameStats.correctAnswers++;
                 saveStats();
                 
                 // Rätt svar - attack lyckas
-                playRandomPikaRatt();
+                if (isPlayerTurn && hasTTS('pika_traff')) {
+                    playTTS('pika_traff');
+                } else {
+                    playRandomPikaRatt();
+                }
                 
                 setTimeout(() => {
                     if (isPlayerTurn) {
@@ -3723,8 +4481,6 @@
                     }, 1500);
                 }, 1000);
             } else {
-                saveStats();
-                
                 // Fel svar
                 playRandomProfFel();
                 
@@ -3747,14 +4503,14 @@
         }
 
         function checkBattleEnd() {
-            if (opponentHealth <= 0) {
-                // Spelaren vann!
-                gameStats.battlesWon++;
+            // Bara om matchen fortfarande pågår (han kan ha gått tillbaka till menyn)
+            if (!document.getElementById('battleScreen').classList.contains('active')) return;
+            
+            if (opponentHealth <= 0 || playerHealth <= 0) {
+                gameStats.totalGames++;
+                if (opponentHealth <= 0) gameStats.battlesWon++;
                 saveStats();
-                showBattleResult(true);
-            } else if (playerHealth <= 0) {
-                // Spelaren förlorade
-                showBattleResult(false);
+                showBattleResult(opponentHealth <= 0);
             } else {
                 // Fortsätt strid - byt tur
                 isPlayerTurn = !isPlayerTurn;
@@ -3764,19 +4520,25 @@
 
         function showBattleResult(won) {
             showScreen('battleResultScreen');
+            const img = document.getElementById('battleResultImg');
+            img.src = playerPokemon.img;
             
             if (won) {
+                img.classList.remove('resting');
                 document.getElementById('battleResultTitle').textContent = '🎉 DU VANN!';
-                document.getElementById('battleResultImg').src = playerPokemon.img;
                 document.getElementById('battleResultMessage').textContent = 
                     `Grattis! ${playerPokemon.name} vann matchen mot ${opponentPokemon.name}!`;
-                playRandomGrattis();
                 createConfetti();
+                playTTS('prof_vann_match', () => {
+                    playRandomGrattis(() => setTimeout(() => openCatch('battleResultScreen'), 300));
+                });
             } else {
-                document.getElementById('battleResultTitle').textContent = '😢 Du förlorade...';
-                document.getElementById('battleResultImg').src = opponentPokemon.img;
+                // Ingen förlust - Pokémon är bara trött och behöver vila
+                img.classList.add('resting');
+                document.getElementById('battleResultTitle').textContent = '💤 Dags att vila!';
                 document.getElementById('battleResultMessage').textContent = 
-                    `${opponentPokemon.name} vann den här gången. Försök igen!`;
+                    `${playerPokemon.name} är trött. Vi vilar och försöker igen!`;
+                playTTS('prof_vila');
             }
         }
 
@@ -3788,7 +4550,10 @@
             let lastTouchEnd = 0;
             document.addEventListener('touchend', function(e) {
                 const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
+                // touch-action: manipulation stoppar redan zoom. Knappar och sådant man räknar
+                // måste klara snabba tryck i rad, annars "försvinner" vartannat tryck.
+                const tappable = e.target.closest && e.target.closest('button, .countable, .hand-svg, .matching-side, .menu-card, .collection-card, .battle-pokemon-card');
+                if (!tappable && now - lastTouchEnd <= 300) {
                     e.preventDefault();
                 }
                 lastTouchEnd = now;
