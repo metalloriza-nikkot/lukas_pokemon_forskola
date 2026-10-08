@@ -501,6 +501,22 @@
 
         .home-btn:hover { opacity: 1; }
 
+        /* Hem-knapp i hörnet på skärmar utan spelhuvud (matchen) */
+        .corner-home-btn {
+            position: fixed;
+            top: 15px;
+            left: 15px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: none;
+            background: var(--card-bg);
+            font-size: 1.8rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            z-index: 100;
+        }
+
         .game-question {
             font-family: 'Fredoka', sans-serif;
             font-size: 1.8rem;
@@ -2462,6 +2478,7 @@
 
     <!-- ============ BATTLE SCREEN ============ -->
     <div class="screen" id="battleScreen">
+        <button class="corner-home-btn" onclick="showMenu()" aria-label="Till menyn">🏠</button>
         <div class="battle-container">
             <div class="battle-arena">
                 <div class="battle-pokemon opponent">
