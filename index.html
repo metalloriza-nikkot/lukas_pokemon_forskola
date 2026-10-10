@@ -300,6 +300,18 @@
         .menu-card.colors { border-color: var(--pokemon-red); }
         .menu-card.matching { border-color: var(--pokemon-blue); }
         .menu-card.sequence { border-color: var(--pokemon-green); }
+        .menu-card.syllables { border-color: #F472B6; }
+
+        /* Sju kort: på iPad i liggande läge får alla plats utan att man behöver scrolla */
+        @media (min-width: 900px) and (orientation: landscape) {
+            .menu-container { max-width: 1000px; }
+            .menu-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        @media (min-width: 700px) and (orientation: portrait) {
+            .menu-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .menu-card.sounds { border-color: var(--pokemon-purple); }
 
         .menu-card-icon {
             font-size: 3rem;
@@ -440,6 +452,14 @@
         }
 
         #gameScreen.bg-sequence {
+            background-image: url('cozy_library_corner.png');
+        }
+
+        #gameScreen.bg-syllables {
+            background-image: url('preschool_interior.png');
+        }
+
+        #gameScreen.bg-sounds {
             background-image: url('cozy_library_corner.png');
         }
 
@@ -2252,6 +2272,226 @@
             color: #333;
         }
 
+        /* ============ ORDBILDER (emoji eller bild) ============ */
+        .word-picture {
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+            font-size: 7rem;
+            line-height: 1.1;
+        }
+
+        .word-picture img {
+            width: 140px;
+            height: 140px;
+            object-fit: contain;
+        }
+
+        .word-label {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.6rem;
+            color: #333;
+        }
+
+        .word-label b {
+            color: #7C3AED;
+        }
+
+        /* ============ KLAPPA ORDET ============ */
+        .syllable-stage {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .syllable-chips {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            min-height: 56px;
+        }
+
+        .syl-chip {
+            display: none;
+        }
+
+        .syl-chip.counted {
+            display: inline-flex;
+        }
+
+        .syl-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(180deg, #F472B6, #DB2777);
+            padding: 6px 20px;
+            border-radius: 30px;
+            box-shadow: 0 3px 0 #9D174D;
+        }
+
+        .drum-row {
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .drum-btn {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: none;
+            background: radial-gradient(circle at 50% 40%, #FFF7E0, #FCD34D);
+            font-size: 4rem;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #B45309, var(--shadow);
+        }
+
+        .drum-btn:active {
+            transform: translateY(4px) scale(0.96);
+            box-shadow: 0 2px 0 #B45309;
+        }
+
+        .drum-btn.boom {
+            animation: drumBoom 0.25s ease;
+        }
+
+        @keyframes drumBoom {
+            50% { transform: scale(1.12); }
+        }
+
+        .drum-pikachu {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+        }
+
+        .drum-pikachu.hop {
+            animation: hop 0.4s ease;
+        }
+
+        /* ============ LJUDJAKTEN ============ */
+        .sound-target {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 25px;
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .sound-letter {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 5rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(180deg, #A78BFA, #7C3AED);
+            min-width: 140px;
+            height: 120px;
+            padding: 0 15px;
+            border-radius: 25px;
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 8px;
+            line-height: 120px;
+            box-shadow: 0 5px 0 #5B21B6;
+        }
+
+        .sound-letter small {
+            font-size: 3.2rem;
+            opacity: 0.85;
+        }
+
+        .sound-anchor {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sound-anchor .word-picture {
+            font-size: 4.5rem;
+        }
+
+        .sound-anchor .word-picture img {
+            width: 90px;
+            height: 90px;
+        }
+
+        .word-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .word-card {
+            background: white;
+            border: 4px solid #EEE;
+            border-radius: 25px;
+            padding: 15px 10px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .word-card .word-picture {
+            font-size: 5rem;
+        }
+
+        .word-card .word-picture img {
+            width: 100px;
+            height: 100px;
+        }
+
+        /* Orden visas först efter svaret - annars blir det bokstavsmatchning i stället för lyssning */
+        .word-card .word-label {
+            visibility: hidden;
+        }
+
+        .word-options.revealed .word-label {
+            visibility: visible;
+        }
+
+        .word-card.speaking {
+            transform: scale(1.08);
+            border-color: var(--pokemon-yellow);
+        }
+
+        .word-card.correct {
+            border-color: var(--pokemon-green);
+            background: #D4EDDA;
+            animation: correctPulse 0.5s ease;
+        }
+
+        .word-card.wrong {
+            border-color: var(--pokemon-red);
+            background: #FFCCCC;
+            animation: wrongShake 0.5s ease;
+        }
+
+        @media (max-width: 600px) {
+            .word-picture { font-size: 5rem; }
+            .word-card .word-picture { font-size: 3.5rem; }
+            .sound-letter { font-size: 3.5rem; min-width: 100px; height: 90px; line-height: 90px; }
+            .sound-letter small { font-size: 2.2rem; }
+            .drum-btn { width: 100px; height: 100px; font-size: 3.2rem; }
+        }
+
         .modal-pokemon-type.dragon { background: #6366F1; }
         .modal-pokemon-type.rock { background: #A16207; }
     </style>
@@ -2339,6 +2579,18 @@
                     <div class="menu-card-icon">📈</div>
                     <div class="menu-card-title">Vad Kommer Sen?</div>
                     <div class="menu-card-desc">Räkna vidare!</div>
+                </div>
+                
+                <div class="menu-card syllables" onclick="startGame('syllables', true)">
+                    <div class="menu-card-icon">🥁</div>
+                    <div class="menu-card-title">Klappa Ordet</div>
+                    <div class="menu-card-desc">Hur många klapp?</div>
+                </div>
+                
+                <div class="menu-card sounds" onclick="startGame('sounds', true)">
+                    <div class="menu-card-icon">🔤</div>
+                    <div class="menu-card-title">Ljudjakten</div>
+                    <div class="menu-card-desc">Hur börjar ordet?</div>
                 </div>
                 
                 <div class="menu-card battle" onclick="startBattle()">
@@ -2614,6 +2866,13 @@
                 audio.muted = false;
                 if (promise) promise.catch(() => {});
             });
+
+            // iOS kräver också att talsyntesen startas i ett tryck första gången
+            if ('speechSynthesis' in window) {
+                const silent = new SpeechSynthesisUtterance(' ');
+                silent.volume = 0;
+                speechSynthesis.speak(silent);
+            }
         }
 
         // ============ POKEMON COLLECTION DATA ============
@@ -3132,7 +3391,48 @@
             prof_tillsammans: 'prof_tillsammans.mp3',
             pika_traff: 'pika_traff.mp3',
             prof_vann_match: 'prof_vann_match.mp3',
-            prof_vila: 'prof_vila.mp3'
+            prof_vila: 'prof_vila.mp3',
+
+            // Klappa ordet och Ljudjakten
+            meny_stavelser: 'meny_stavelser.mp3',
+            meny_ljud: 'meny_ljud.mp3',
+            prof_intro_syllables: 'prof_intro_syllables.mp3',
+            prof_intro_sounds: 'prof_intro_sounds.mp3',
+            prof_klappa: 'prof_klappa.mp3',
+            prof_hur_manga_klapp: 'prof_hur_manga_klapp.mp3',
+            prof_vi_klappar: 'prof_vi_klappar.mp3',
+            prof_vilken_borjar: 'prof_vilken_borjar.mp3'
+            // + ett klipp per ord (ord_<nyckel>.mp3), läggs till under ORDEN nedan
+        };
+
+        // Saknas inspelningen läses texten upp med enhetens svenska röst i stället
+        const TTS_TEXT = {
+            meny_rakna: 'Räkna Pokémon!',
+            meny_farg: 'Färgjakten!',
+            meny_para: 'Para ihop!',
+            meny_sen: 'Vad kommer sen?',
+            meny_match: 'Pokémon-match!',
+            meny_samlarbok: 'Din samlarbok!',
+            meny_stavelser: 'Klappa ordet!',
+            meny_ljud: 'Ljudjakten!',
+            prof_tryck_rakna: 'Tryck på varje Pokémon och räkna!',
+            prof_hur_manga_tillsammans: 'Hur många blev det?',
+            prof_forsok_igen: 'Nästan! Försök en gång till!',
+            prof_andra_sidan: 'Titta, det var den här sidan!',
+            prof_vi_raknar: 'Vi räknar tillsammans!',
+            prof_kasta_boll: 'Tryck på Pokébollen och fånga en Pokémon!',
+            prof_fangade: 'Du fångade en ny Pokémon!',
+            prof_din_tur: 'Din tur att attackera!',
+            prof_forsvara: 'Nu attackerar de! Försvara dig!',
+            prof_tillsammans: 'Hur många blir det tillsammans?',
+            prof_vann_match: 'Du vann matchen!',
+            prof_vila: 'Oj, din Pokémon är trött. Vi vilar och försöker igen!',
+            prof_intro_syllables: 'Hej Lukas! Nu ska vi klappa ord. Tryck på trumman en gång för varje del av ordet!',
+            prof_intro_sounds: 'Hej Lukas! Nu ska vi lyssna på hur ord börjar. Vilken bild börjar på samma ljud?',
+            prof_klappa: 'Klappa ordet på trumman!',
+            prof_hur_manga_klapp: 'Hur många klapp blev det?',
+            prof_vi_klappar: 'Vi klappar tillsammans!',
+            prof_vilken_borjar: 'Vilken bild börjar som'
         };
 
         // Förladdade klipp (blob-URL:er) så att rösten startar direkt
@@ -3170,10 +3470,91 @@
             return !!TTS_FILES[audioId] && !ttsMissing.has(audioId);
         }
 
+        // ============ SYSTEMRÖST (reserv när inspelning saknas) ============
+        const speechSupported = 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window;
+        let speechSeq = 0;
+
+        function swedishVoice() {
+            const voices = speechSynthesis.getVoices();
+            return voices.find(v => v.lang === 'sv-SE') || voices.find(v => /^sv/i.test(v.lang)) || null;
+        }
+
+        function cancelSpeech() {
+            speechSeq++;
+            if (speechSupported && (speechSynthesis.speaking || speechSynthesis.pending)) {
+                speechSynthesis.cancel();
+            }
+        }
+
+        function speakText(text, callback) {
+            if (!speechSupported || !text) {
+                if (callback) callback();
+                return;
+            }
+
+            // Finns det röster men ingen svensk är tystnad bättre än engelskt uttal
+            const voice = swedishVoice();
+            if (!voice && speechSynthesis.getVoices().length > 0) {
+                if (callback) callback();
+                return;
+            }
+
+            const wasBusy = speechSynthesis.speaking || speechSynthesis.pending;
+            cancelSpeech();
+            const mySeq = speechSeq;
+            let finished = false;
+            let safety = null;
+
+            // Avbruten replik (mySeq ändrad) ska inte driva kedjan vidare
+            const done = () => {
+                if (finished) return;
+                finished = true;
+                clearTimeout(safety);
+                if (mySeq === speechSeq && callback) callback();
+            };
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'sv-SE';
+            if (voice) utterance.voice = voice;
+            utterance.rate = 0.85;
+            utterance.pitch = 1.1;
+            utterance.onend = done;
+            utterance.onerror = done;
+
+            // Vissa webbläsare skickar aldrig onend - gå vidare ändå
+            safety = setTimeout(done, 1500 + text.length * 120);
+
+            const start = () => { if (mySeq === speechSeq) speechSynthesis.speak(utterance); };
+            // Safari kan ignorera speak() direkt efter cancel()
+            if (wasBusy) setTimeout(start, 60); else start();
+        }
+
+        // Läs upp en fri text (t.ex. en stavelse) och avbryt pågående klipp
+        function sayText(text, callback) {
+            if (isMuted) {
+                if (callback) callback();
+                return;
+            }
+            ttsPlayer.onended = null;
+            ttsPlayer.pause();
+            speakText(text, callback);
+        }
+
+        // Som setTimeout, men struntar i det om rösten har tystats under tiden (t.ex. 🏠)
+        function afterDelay(fn, ms) {
+            const token = ttsToken;
+            setTimeout(() => { if (token === ttsToken) fn(); }, ms);
+        }
+
+        function capitalize(text) {
+            return text.charAt(0).toUpperCase() + text.slice(1);
+        }
+
         function stopTTS() {
             ttsToken++;
             ttsPlayer.onended = null;
             ttsPlayer.pause();
+            cancelSpeech();
         }
 
         // Spela flera klipp efter varandra. Ett objekt { id, onStart } kör onStart när klippet börjar.
@@ -3190,23 +3571,35 @@
                 const item = items[i++];
                 if (!item) return next();
                 if (typeof item === 'object' && item.onStart) item.onStart();
-                playTTS(typeof item === 'string' ? item : item.id, () => setTimeout(next, 150));
+                const after = () => setTimeout(next, 150);
+                if (typeof item === 'object' && !item.id && item.text) {
+                    sayText(item.text, after);
+                } else {
+                    playTTS(typeof item === 'string' ? item : item.id, after);
+                }
             }
 
             next();
         }
 
         function playTTS(audioId, callback) {
-            if (isMuted || !hasTTS(audioId)) {
+            if (isMuted) {
                 if (callback) callback();
                 return;
             }
 
-            const src = ttsCache[audioId] || TTS_FILES[audioId];
-            if (!src) {
-                if (callback) callback();
+            // Ingen inspelning: läs upp texten med systemrösten om det finns en
+            if (!hasTTS(audioId)) {
+                if (TTS_TEXT[audioId]) {
+                    sayText(TTS_TEXT[audioId], callback);
+                } else if (callback) {
+                    callback();
+                }
                 return;
             }
+
+            const src = ttsCache[audioId] || TTS_FILES[audioId];
+            cancelSpeech();
 
             // Avbryt pågående replik och ersätt dess callback
             ttsPlayer.pause();
@@ -3216,10 +3609,10 @@
 
             ttsPlayer.play().catch(e => {
                 console.log('TTS play failed:', e);
-                // Låt inte t.ex. räkneanimationen fastna om ljudet inte kan spelas
-                if (e.name !== 'AbortError' && callback && ttsPlayer.onended === callback) {
+                // Filen gick inte att spela: systemrösten eller vidare, så att inget fastnar
+                if (e.name !== 'AbortError' && ttsPlayer.onended === (callback || null)) {
                     ttsPlayer.onended = null;
-                    callback();
+                    speakText(TTS_TEXT[audioId], callback);
                 }
             });
         }
@@ -3266,20 +3659,118 @@
             brown: 'prof_tryck_brun'
         };
 
+        // ============ ORDEN (Klappa ordet och Ljudjakten) ============
+        // [bild, stavelser]. Bilden är en emoji eller en bildfil. Nyckeln blir filnamnet ord_<nyckel>.mp3.
+        const WORDS = {
+            // 1 stavelse
+            sol: ['☀️', 'sol'], bil: ['🚗', 'bil'], hund: ['🐶', 'hund'], katt: ['🐱', 'katt'],
+            fisk: ['🐟', 'fisk'], boll: ['⚽', 'boll'], hus: ['🏠', 'hus'], glass: ['🍦', 'glass'],
+            tag: ['🚂', 'tåg'], ko: ['🐮', 'ko'], bok: ['📖', 'bok'], mus: ['🐭', 'mus'],
+            gris: ['🐷', 'gris'], hast: ['🐴', 'häst'], bat: ['⛵', 'båt'], bi: ['🐝', 'bi'],
+            ros: ['🌹', 'ros'], tand: ['🦷', 'tand'], fot: ['🦶', 'fot'], sax: ['✂️', 'sax'],
+            korv: ['🌭', 'korv'], kopp: ['☕', 'kopp'], buss: ['🚌', 'buss'], ring: ['💍', 'ring'],
+            hatt: ['🎩', 'hatt'], eld: ['🔥', 'eld'], lok: ['🧅', 'lök'], lov: ['🍂', 'löv'],
+            sang: ['🛏️', 'säng'], talt: ['⛺', 'tält'], bjorn: ['🐻', 'björn'], svamp: ['🍄', 'svamp'],
+            dorr: ['🚪', 'dörr'], ost: ['🧀', 'ost'],
+            // 2 stavelser
+            lukas: ['Lukas.png', 'Lu-kas'], banan: ['🍌', 'ba-nan'], apple: ['🍎', 'äp-ple'],
+            apa: ['🐵', 'a-pa'], kanin: ['🐰', 'ka-nin'], lejon: ['🦁', 'le-jon'], paron: ['🍐', 'pä-ron'],
+            mane: ['🌙', 'må-ne'], fjaril: ['🦋', 'fjä-ril'], tarta: ['🎂', 'tår-ta'], nalle: ['🧸', 'nal-le'],
+            groda: ['🐸', 'gro-da'], pizza: ['🍕', 'piz-za'], raket: ['🚀', 'ra-ket'], anka: ['🦆', 'an-ka'],
+            blomma: ['🌸', 'blom-ma'], kaka: ['🍪', 'ka-ka'], tomat: ['🍅', 'to-mat'], pingvin: ['🐧', 'ping-vin'],
+            lampa: ['💡', 'lam-pa'], morot: ['🥕', 'mo-rot'], myra: ['🐜', 'my-ra'], fagel: ['🐦', 'få-gel'],
+            robot: ['🤖', 'ro-bot'], tiger: ['🐯', 'ti-ger'], gurka: ['🥒', 'gur-ka'], drake: ['🐉', 'dra-ke'],
+            delfin: ['🐬', 'del-fin'], nyckel: ['🔑', 'nyck-el'], nasa: ['👃', 'nä-sa'], snigel: ['🐌', 'sni-gel'],
+            flagga: ['🚩', 'flag-ga'], penna: ['✏️', 'pen-na'], lastbil: ['🚚', 'last-bil'],
+            flygplan: ['✈️', 'flyg-plan'], polis: ['👮', 'po-lis'],
+            // 3 stavelser
+            pikachu: ['Pikachu.png', 'Pi-ka-chu'], elefant: ['🐘', 'e-le-fant'], jordgubbe: ['🍓', 'jord-gub-be'],
+            paraply: ['☂️', 'pa-ra-ply'], krokodil: ['🐊', 'kro-ko-dil'], potatis: ['🥔', 'po-ta-tis'],
+            ananas: ['🍍', 'a-na-nas'], apelsin: ['🍊', 'a-pel-sin'], skoldpadda: ['🐢', 'sköld-pad-da'],
+            snogubbe: ['☃️', 'snö-gub-be'], ekorre: ['🐿️', 'e-kor-re'], igelkott: ['🦔', 'i-gel-kott'],
+            regnbage: ['🌈', 'regn-bå-ge'], ambulans: ['🚑', 'am-bu-lans'], pannkaka: ['🥞', 'pann-ka-ka'],
+            // 4 stavelser
+            helikopter: ['🚁', 'he-li-kop-ter'], vattenmelon: ['🍉', 'vat-ten-me-lon']
+        };
+
+        function wordSyllables(key) {
+            return WORDS[key][1].split('-');
+        }
+
+        function wordText(key) {
+            return WORDS[key][1].replace(/-/g, '');
+        }
+
+        function wordPicture(key) {
+            const pic = WORDS[key][0];
+            const inner = pic.endsWith('.png') ? `<img src="${pic}" alt="${wordText(key)}">` : pic;
+            return `<div class="word-picture">${inner}</div>`;
+        }
+
+        // Ordet skrivet med första bokstaven markerad
+        function wordLabel(key) {
+            const text = wordText(key);
+            return `<span class="word-label"><b>${text[0]}</b>${text.slice(1)}</span>`;
+        }
+
+        Object.keys(WORDS).forEach(key => {
+            TTS_FILES['ord_' + key] = 'ord_' + key + '.mp3';
+            TTS_TEXT['ord_' + key] = wordText(key);
+        });
+
+        // Ljudjakten: bara ord där första bokstaven låter som den ser ut.
+        // Inga sj-/tj-ljud (stjärna, sked, kex, giraff, hjärta) - och inga Pokémon-namn som Charmander.
+        const SOUNDS = {
+            L: { anchor: 'lukas', words: ['lejon', 'lampa', 'lok', 'lov', 'lastbil'] },
+            S: { anchor: 'sol', words: ['sax', 'svamp', 'sang', 'snigel', 'snogubbe'] },
+            M: { anchor: 'mane', words: ['mus', 'morot', 'myra'] },
+            F: { anchor: 'fisk', words: ['fjaril', 'fot', 'fagel', 'flagga', 'flygplan'] },
+            A: { anchor: 'apa', words: ['anka', 'ananas', 'apelsin', 'ambulans'] },
+            B: { anchor: 'boll', words: ['bil', 'banan', 'bok', 'bat', 'bi', 'buss', 'bjorn'] },
+            R: { anchor: 'raket', words: ['ros', 'robot', 'ring', 'regnbage'] },
+            K: { anchor: 'katt', words: ['ko', 'kanin', 'kaka', 'krokodil', 'kopp', 'korv'] },
+            P: { anchor: 'pizza', words: ['paron', 'pingvin', 'paraply', 'potatis', 'penna', 'polis'] },
+            T: { anchor: 'tag', words: ['tomat', 'tarta', 'tand', 'tiger', 'talt'] },
+            H: { anchor: 'hund', words: ['hus', 'hast', 'hatt', 'helikopter'] },
+            D: { anchor: 'drake', words: ['delfin', 'dorr'] },
+            G: { anchor: 'gris', words: ['groda', 'glass', 'gurka'] },
+            N: { anchor: 'nalle', words: ['nasa', 'nyckel'] },
+            E: { anchor: 'elefant', words: ['ekorre', 'eld'] }
+        };
+
+        // Ljud som är lätta att börja med (kan dras ut: llll, ssss, mmmm) kommer först
+        const SOUND_LEVELS = {
+            easy: ['L', 'S', 'M', 'F', 'A', 'B'],
+            medium: ['L', 'S', 'M', 'F', 'A', 'B', 'R', 'K', 'P', 'T', 'H'],
+            hard: Object.keys(SOUNDS)
+        };
+
+        // Ljud som låter nästan likadant visas aldrig mot varandra
+        const confusableSounds = { B: ['P'], P: ['B'], D: ['T'], T: ['D'], G: ['K'], K: ['G'], M: ['N'], N: ['M'] };
+
         // ============ TRYCK OCH RÄKNA ============
         // Varje sak som ska räknas har klassen "countable" och ett nummermärke.
         // Lukas trycker på dem en i taget och Pikachu säger talet.
         let countState = null;
 
-        function setupCountables(items, onAllCounted) {
-            countState = { items, count: 0, onAllCounted, locked: false };
+        // options.say(n, el, callback) läser upp (standard: Pikachu säger talet)
+        // options.label(n, el) är texten i märket (standard: talet)
+        function setupCountables(items, onAllCounted, options = {}) {
+            countState = {
+                items,
+                count: 0,
+                onAllCounted,
+                locked: false,
+                say: options.say || ((n, el, callback) => playTTS(numberToTTS[n], callback)),
+                label: options.label || (n => n)
+            };
         }
 
         function markCounted(el) {
             countState.count++;
             const n = countState.count;
-            const badge = el.querySelector('.count-badge, .count-badge-svg');
-            if (badge) badge.textContent = n;
+            const badge = el.querySelector('.count-badge, .count-badge-svg, .syl-text');
+            if (badge) badge.textContent = countState.label(n, el);
             el.classList.add('counted');
             el.classList.remove('hop');
             void el.getBoundingClientRect(); // starta om hopp-animationen
@@ -3294,7 +3785,7 @@
             const n = markCounted(el);
             const allDone = countState.count === countState.items.length;
             const state = countState;
-            playTTS(numberToTTS[n], allDone ? () => {
+            state.say(n, el, allDone ? () => {
                 if (countState === state && state.onAllCounted) state.onAllCounted();
             } : undefined);
         }
@@ -3320,8 +3811,9 @@
                     if (done) setTimeout(done, 300);
                     return;
                 }
-                const n = markCounted(state.items[i++]);
-                playTTS(numberToTTS[n], () => setTimeout(step, 250));
+                const el = state.items[i++];
+                const n = markCounted(el);
+                state.say(n, el, () => setTimeout(step, 250));
             }
 
             step();
@@ -3450,7 +3942,9 @@
             counting: 'Hej <span class="highlight">Lukas</span>! Välkommen till Pokémon-förskolan! 🏫<br><br>Alla små Pokémon har sprungit ut och leker. Kan du hjälpa mig att <span class="highlight">RÄKNA</span> dem?',
             colors: 'Hej <span class="highlight">Lukas</span>! Pokémon har blandats ihop! 🌈<br><br>Kan du hjälpa mig hitta rätt <span class="highlight">FÄRG</span>? Tryck på den Pokémon som har rätt färg!',
             matching: 'Hej <span class="highlight">Lukas</span>! Nu ska vi para ihop! ⚖️<br><br>Se på siffran i mitten. Tryck på sidan med <span class="highlight">LIKA MÅNGA</span> Pokéballs!',
-            sequence: 'Hej <span class="highlight">Lukas</span>! Pokémon älskar att räkna! 📈<br><br>Kan du hjälpa dem? <span class="highlight">Vad kommer efter</span>?'
+            sequence: 'Hej <span class="highlight">Lukas</span>! Pokémon älskar att räkna! 📈<br><br>Kan du hjälpa dem? <span class="highlight">Vad kommer efter</span>?',
+            syllables: 'Hej <span class="highlight">Lukas</span>! Nu ska vi <span class="highlight">KLAPPA</span> ord! 🥁<br><br>Tryck på trumman en gång för varje del av ordet. Pi-ka-chu!',
+            sounds: 'Hej <span class="highlight">Lukas</span>! Nu ska vi lyssna på hur ord <span class="highlight">BÖRJAR</span>! 🔤<br><br>Lukas börjar på L. Vilken bild börjar på samma ljud?'
         };
 
         // ============ SCREEN NAVIGATION ============
@@ -3536,7 +4030,9 @@
             counting: 'meny_rakna',
             colors: 'meny_farg',
             matching: 'meny_para',
-            sequence: 'meny_sen'
+            sequence: 'meny_sen',
+            syllables: 'meny_stavelser',
+            sounds: 'meny_ljud'
         };
 
         function startGame(gameType, fromMenu) {
@@ -3553,7 +4049,7 @@
             if (fromMenu) {
                 playTTSChain([menuClips[gameType], intro]);
             } else {
-                setTimeout(() => playTTS(intro), 500);
+                afterDelay(() => playTTS(intro), 500);
             }
         }
 
@@ -3581,7 +4077,51 @@
             const settings = getDifficultySettings();
             const maxNum = settings.maxNumber;
             
+            const shuffle = list => list.sort(() => Math.random() - 0.5);
+            const pickOne = list => list[Math.floor(Math.random() * list.length)];
+            
             switch(currentGame) {
+                case 'syllables': {
+                    // Lätt: 1-2 stavelser, Medium: 1-3, Svår: 1-4. Blanda så att antalen varierar.
+                    const maxSyl = { easy: 2, medium: 3, hard: 4 }[gameDifficulty] || 3;
+                    const byCount = {};
+                    Object.keys(WORDS).forEach(key => {
+                        const n = wordSyllables(key).length;
+                        if (n <= maxSyl) (byCount[n] = byCount[n] || []).push(key);
+                    });
+                    Object.values(byCount).forEach(shuffle);
+                    const counts = shuffle(Object.keys(byCount).map(Number));
+                    for (let i = 0; i < totalQuestions; i++) {
+                        const list = byCount[counts[i % counts.length]];
+                        questions.push({ word: list.pop(), maxButton: Math.min(maxSyl + 1, 5) });
+                    }
+                    shuffle(questions);
+                    break;
+                }
+                
+                case 'sounds': {
+                    const letters = shuffle([...(SOUND_LEVELS[gameDifficulty] || SOUND_LEVELS.medium)]).slice(0, totalQuestions);
+                    // På Lätt är Lukas eget L alltid med
+                    if (gameDifficulty === 'easy' && !letters.includes('L')) letters[0] = 'L';
+                    const optionCount = gameDifficulty === 'hard' ? 4 : 3;
+                    
+                    letters.forEach(letter => {
+                        const correct = pickOne(SOUNDS[letter].words);
+                        const blocked = confusableSounds[letter] || [];
+                        const otherLetters = shuffle(Object.keys(SOUNDS).filter(l => l !== letter && !blocked.includes(l)))
+                            .slice(0, optionCount - 1);
+                        const distractors = otherLetters.map(l =>
+                            pickOne([SOUNDS[l].anchor, ...SOUNDS[l].words].filter(k => k !== 'lukas')));
+                        questions.push({
+                            letter,
+                            anchor: SOUNDS[letter].anchor,
+                            correct,
+                            options: shuffle([correct, ...distractors])
+                        });
+                    });
+                    break;
+                }
+                
                 case 'counting':
                     // Skapa en pool av alla möjliga antal för bättre variation
                     const countPool = [];
@@ -3739,7 +4279,7 @@
                     
                     repeatQuestion = () => playTTSChain(['prof_hur_manga', 'prof_tryck_rakna']);
                     const clips = currentQuestion === 0 ? ['prof_hur_manga', 'prof_tryck_rakna'] : ['prof_hur_manga'];
-                    setTimeout(() => playTTSChain(clips), 300);
+                    afterDelay(() => playTTSChain(clips), 300);
                     break;
                 }
                     
@@ -3762,7 +4302,7 @@
                     gameArea.innerHTML = colorHtml;
                     
                     repeatQuestion = () => playTTS(colorToTTS[q.targetColor]);
-                    setTimeout(repeatQuestion, 300);
+                    afterDelay(repeatQuestion, 300);
                     break;
                 }
                     
@@ -3787,7 +4327,7 @@
                     
                     // Pikachu säger talet efter frågan, så att han inte behöver känna igen siffran
                     repeatQuestion = () => playTTSChain(['prof_vilken_sida', numberToTTS[q.number]]);
-                    setTimeout(repeatQuestion, 300);
+                    afterDelay(repeatQuestion, 300);
                     break;
                 }
                     
@@ -3813,9 +4353,174 @@
                     gameArea.innerHTML = seqHtml;
                     
                     repeatQuestion = () => playTTSChain(sequenceClips(q), () => highlightSequence(null));
-                    setTimeout(repeatQuestion, 300);
+                    afterDelay(repeatQuestion, 300);
                     break;
                 }
+                
+                case 'syllables': {
+                    questionEl.textContent = 'Klappa ordet!';
+                    const syllables = wordSyllables(q.word);
+                    
+                    let html = '<div class="syllable-stage">';
+                    html += wordPicture(q.word);
+                    html += '<div class="syllable-chips">';
+                    syllables.forEach(syl => {
+                        html += `<span class="countable syl-chip" data-syl="${syl}"><span class="syl-text"></span></span>`;
+                    });
+                    html += '</div>';
+                    html += `<div class="drum-row">
+                        <img src="Pikachu_happy.png" alt="Pikachu" class="drum-pikachu" id="drumPikachu">
+                        <button class="drum-btn" id="drumBtn" onclick="tapDrum()" aria-label="Trumma">🥁</button>
+                    </div>`;
+                    html += '</div>';
+                    
+                    html += '<div class="number-buttons">';
+                    for (let i = 1; i <= q.maxButton; i++) {
+                        html += `<button class="number-btn" data-value="${i}" onclick="checkSyllableAnswer(${i}, ${syllables.length}, this)">${i}</button>`;
+                    }
+                    html += '</div>';
+                    
+                    gameArea.innerHTML = html;
+                    
+                    // Varje trumslag visar nästa stavelse och läser upp den
+                    setupCountables([...gameArea.querySelectorAll('.syl-chip')], () => {
+                        playTTS('prof_hur_manga_klapp');
+                        inviteAnswer('#gameArea .number-btn:not(:disabled)');
+                    }, {
+                        say: (n, el, callback) => sayText(el.dataset.syl, callback),
+                        label: (n, el) => el.dataset.syl
+                    });
+                    
+                    repeatQuestion = () => playTTSChain(['ord_' + q.word, 'prof_klappa']);
+                    afterDelay(() => playTTSChain(currentQuestion === 0 ? ['ord_' + q.word, 'prof_klappa'] : ['ord_' + q.word]), 300);
+                    break;
+                }
+                
+                case 'sounds': {
+                    questionEl.innerHTML = `Vilken börjar som <b>${wordText(q.anchor)}</b>?`;
+                    
+                    let html = `<div class="sound-target">
+                        <div class="sound-letter">${q.letter}<small>${q.letter.toLowerCase()}</small></div>
+                        <div class="sound-anchor">${wordPicture(q.anchor)}${wordLabel(q.anchor)}</div>
+                    </div>`;
+                    html += '<div class="word-options" id="wordOptions">';
+                    q.options.forEach(key => {
+                        html += `<button class="word-card" data-key="${key}" onclick="checkSoundAnswer('${key}', this)">
+                            ${wordPicture(key)}${wordLabel(key)}
+                        </button>`;
+                    });
+                    html += '</div>';
+                    
+                    gameArea.innerHTML = html;
+                    
+                    repeatQuestion = () => playTTSChain(soundClips(q), () => highlightWordCard(null));
+                    afterDelay(repeatQuestion, 300);
+                    break;
+                }
+            }
+        }
+
+        // ============ KLAPPA ORDET ============
+        function tapDrum() {
+            if (!countState || countState.locked) return;
+            
+            const drum = document.getElementById('drumBtn');
+            const pikachu = document.getElementById('drumPikachu');
+            [drum, pikachu].forEach(el => {
+                el.classList.remove(el === drum ? 'boom' : 'hop');
+                void el.offsetWidth;
+                el.classList.add(el === drum ? 'boom' : 'hop');
+            });
+            
+            const next = countState.items.find(el => !el.classList.contains('counted'));
+            if (next) countItem(next);
+        }
+
+        function revealAllSyllables() {
+            document.querySelectorAll('#gameArea .syl-chip').forEach(chip => {
+                chip.querySelector('.syl-text').textContent = chip.dataset.syl;
+                chip.classList.add('counted');
+            });
+        }
+
+        function checkSyllableAnswer(selected, correct, clickedBtn) {
+            const q = questions[currentQuestion];
+            const buttons = document.querySelectorAll('#gameArea .number-btn');
+            buttons.forEach(btn => btn.disabled = true);
+            const capitalized = capitalize(wordSyllables(q.word).join('-'));
+            
+            if (selected === correct) {
+                clickedBtn.classList.add('correct');
+                revealAllSyllables();
+                showFeedback(true, `${capitalized} - ${correct} klapp!`);
+                return;
+            }
+            
+            clickedBtn.classList.add('wrong');
+            questionAttempts++;
+            
+            if (questionAttempts < MAX_ATTEMPTS) {
+                // Klappa tillsammans och låt honom välja igen
+                playTTS('prof_vi_klappar', () => autoCount(() => {
+                    playTTS('prof_hur_manga_klapp');
+                    buttons.forEach(btn => { if (!btn.classList.contains('wrong')) btn.disabled = false; });
+                    inviteAnswer('#gameArea .number-btn:not(:disabled)');
+                }));
+            } else {
+                buttons.forEach(btn => { if (+btn.dataset.value === correct) btn.classList.add('correct'); });
+                revealAllSyllables();
+                showFeedback(false, `${capitalized} - ${correct} klapp!`);
+            }
+        }
+
+        // ============ LJUDJAKTEN ============
+        function highlightWordCard(key) {
+            document.querySelectorAll('#gameArea .word-card').forEach(card => {
+                card.classList.toggle('speaking', card.dataset.key === key);
+            });
+        }
+
+        // "Vilken bild börjar som Lukas?" - sedan säger han vad varje bild heter
+        function soundClips(q) {
+            return [
+                'prof_vilken_borjar',
+                'ord_' + q.anchor,
+                ...q.options.map(key => ({ id: 'ord_' + key, onStart: () => highlightWordCard(key) }))
+            ];
+        }
+
+        function checkSoundAnswer(key, card) {
+            const q = questions[currentQuestion];
+            const cards = document.querySelectorAll('#gameArea .word-card');
+            highlightWordCard(null);
+            
+            if (key === q.correct) {
+                cards.forEach(c => c.style.pointerEvents = 'none');
+                card.classList.add('correct');
+                document.getElementById('wordOptions').classList.add('revealed');
+                // Säg ordet först, sedan beröm
+                playTTSChain(['ord_' + key, 'ord_' + q.anchor], () => {
+                    showFeedback(true, `${capitalize(wordText(key))} börjar på ${q.letter}!`);
+                });
+                return;
+            }
+            
+            card.classList.add('wrong');
+            card.style.pointerEvents = 'none';
+            questionAttempts++;
+            
+            if (questionAttempts < MAX_ATTEMPTS) {
+                // Hör skillnaden: det han valde, sedan ordet det ska likna
+                playTTSChain(['ord_' + key, 'prof_forsok_igen', ...soundClips(q)], () => highlightWordCard(null));
+            } else {
+                cards.forEach(c => {
+                    c.style.pointerEvents = 'none';
+                    if (c.dataset.key === q.correct) c.classList.add('correct');
+                });
+                document.getElementById('wordOptions').classList.add('revealed');
+                playTTSChain(['ord_' + q.correct, 'ord_' + q.anchor], () => {
+                    showFeedback(false, `${capitalize(wordText(q.correct))} börjar på ${q.letter}, som ${capitalize(wordText(q.anchor))}!`);
+                });
             }
         }
 
@@ -3974,7 +4679,7 @@
                 card.className = 'feedback-card correct';
                 pokemon.src = fb.img;
                 text.textContent = fb.text;
-                subtext.textContent = fb.subtext;
+                subtext.textContent = extraMessage || fb.subtext;
                 
                 // Spela Pikachu-ljud
                 playRandomPikaRatt();
@@ -4129,7 +4834,7 @@
         document.addEventListener('keydown', function(e) {
             // Only handle keyboard in game screen for counting and sequence games
             if (!document.getElementById('gameScreen').classList.contains('active')) return;
-            if (currentGame !== 'counting' && currentGame !== 'sequence') return;
+            if (!['counting', 'sequence', 'syllables'].includes(currentGame)) return;
             if (document.getElementById('feedbackOverlay').classList.contains('active')) return;
             
             const key = e.key;
@@ -4442,7 +5147,7 @@
             
             const turnClip = isPlayerTurn ? 'prof_din_tur' : 'prof_forsvara';
             repeatQuestion = () => playTTSChain([turnClip, 'prof_tillsammans']);
-            setTimeout(repeatQuestion, 300);
+            afterDelay(repeatQuestion, 300);
         }
 
         function checkBattleAnswer(selected, correct, clickedBtn) {
